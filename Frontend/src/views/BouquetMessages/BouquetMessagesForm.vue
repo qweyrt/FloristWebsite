@@ -169,7 +169,7 @@ export default {
         headers: { "content-type": "application/json" },
       };
       axios
-        .post("http://localhost:30102/api/BouquetsMessages/add", parse, options)
+        .post("http://localhost:5001/api/BouquetsMessages/add", parse, options)
         .then((response) => {
             store.dispatch("fetchBouquetMessages", "bouquetMessages");
         });

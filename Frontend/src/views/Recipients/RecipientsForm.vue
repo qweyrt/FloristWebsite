@@ -226,7 +226,7 @@ export default {
         headers: { "content-type": "application/json" },
       };
       axios
-        .post("http://localhost:30102/api/Recipients/add", parse, options)
+        .post("http://localhost:5001/api/Recipients/add", parse, options)
         .then((response) => {
           if (response.data) {
             store.dispatch("fetchRecipients", "recipients");

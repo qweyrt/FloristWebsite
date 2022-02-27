@@ -1,7 +1,5 @@
 module.exports = {
-  publicPath: process.env.DEPLOY_ENV === 'GH_PAGES'
-    ? '/admin-one-vue-bulma-dashboard/'
-    : '/',
+  publicPath:  '/',
 
   // Remove moment.js from chart.js
   // https://www.chartjs.org/docs/latest/getting-started/integration.html#bundlers-webpack-rollup-etc
@@ -11,5 +9,6 @@ module.exports = {
         moment: 'moment'
       }
     }
-  }
+  },
+  lintOnSave:false
 }
