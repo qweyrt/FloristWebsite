@@ -205,6 +205,39 @@ const routes = [
     component: () => import(/* webpackChunkName: "client-form" */ '@/views/Carts/CartsForm.vue'),
     props: true
   },
+  {
+    meta:{
+      title: 'New Recipient'
+    },
+    path: '/shop',
+    name: 'shop',
+    component: () => import(/* webpackChunkName: "client-form" */ '@/views/Shop/Index.vue')
+  },
+  {
+    meta: {
+      title: 'Product'
+    },
+    path: '/product/:id',
+    name: 'Product',
+    component: () => import(/* webpackChunkName: "client-form" */ '@/views/Shop/SingleProduct.vue')
+  },
+  {
+    meta: {
+      title: 'Cart'
+    },
+    path: '/cart-check',
+    name: 'Cart',
+    component: () => import(/* webpackChunkName: "client-form" */ '@/views/Shop/Cart.vue')
+  },
+  {
+    meta: {
+      title: 'Products'
+    },
+    path: '/products/:category',
+    name: 'Products',
+    component: () => import(/* webpackChunkName: "client-form" */ '@/views/Shop/Shop.vue')
+  },
+
 ]
 
 const router = new VueRouter({

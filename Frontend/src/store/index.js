@@ -115,7 +115,7 @@ const store = new Vuex.Store({
 		},
 		fetchBouquets({ commit },payload) {
 			axios
-				.get('http://localhost:30102/api/Bouquets')
+				.get('https://localhost:5001/api/Bouquets')
 				.then((r) => {
 					if (r.data) {
 						commit('basic',{
@@ -130,7 +130,7 @@ const store = new Vuex.Store({
 		},
 		fetchBouquetMessages({ commit },payload) {
 			axios
-				.get('http://localhost:30102/api/BouquetsMessages')
+				.get('https://localhost:5001/api/BouquetsMessages')
 				.then((r) => {
 					if (r.data) {
 						commit('basic',{
@@ -145,7 +145,7 @@ const store = new Vuex.Store({
 		},
 		fetchCustomers({ commit },payload) {
 			axios
-				.get('http://localhost:30102/api/Customers')
+				.get('https://localhost:5001/api/Data/Customers')
 				.then((r) => {
 					if (r.data) {
 						commit('basic',{
@@ -160,7 +160,7 @@ const store = new Vuex.Store({
 		},
 		fetchRecipients({ commit },payload) {
 			axios
-				.get('http://localhost:30102/api/Recipients')
+				.get('https://localhost:5001/api/Data/Recipients')
 				.then((r) => {
 					if (r.data) {
 						commit('basic',{
@@ -190,7 +190,7 @@ const store = new Vuex.Store({
 		},
 		fetchCarts({ commit },payload) {
 			axios
-				.get('http://localhost:30102/api/Carts')
+				.delete(`https://localhost:5001/api/Bouquets/delete/${id}`)
 				.then((r) => {
 					if (r.data) {
 						commit('basic',{

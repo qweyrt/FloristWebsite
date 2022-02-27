@@ -243,7 +243,7 @@ export default {
         headers: { "content-type": "application/json" },
       };
       axios
-        .post("http://localhost:30102/api/Customers/add", parse, options)
+        .post("http://localhost:5001/api/Customers/add", parse, options)
         .then((response) => {
           store.dispatch("fetchCustomers", "customers");
         });

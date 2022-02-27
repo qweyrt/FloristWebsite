@@ -9,6 +9,7 @@ import Buefy from 'buefy'
 import router from './router'
 import store from './store'
 import FileSelector from 'vue-file-selector';
+import LoadScript from "vue-plugin-load-script"
 
 /* Vue. Main component */
 import App from './App.vue'
