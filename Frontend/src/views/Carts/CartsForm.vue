@@ -288,7 +288,7 @@ export default {
         headers: { "content-type": "application/json" },
       };
       axios
-        .post("http://localhost:30102/api/Carts/add", parse, options)
+        .post(`http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Carts/add`, parse, options)
         .then((response) => {
           store.dispatch("fetchCarts", "carts");
         });
@@ -307,7 +307,7 @@ export default {
         headers: { "content-type": "application/json" },
       };
       axios
-        .put("http://localhost:30102/api/Carts/update", parse, options)
+        .put(`http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Carts/update`, parse, options)
         .then((response) => {
           store.dispatch("fetchCarts", "carts");
         });

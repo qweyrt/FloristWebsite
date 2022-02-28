@@ -115,7 +115,7 @@ export default {
     },
 	 deleteBouquetMessage(id) {
       axios
-        .delete(`http://localhost:30102/api/BouquetsMessages/delete/${id}`)
+        .delete(`http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/BouquetsMessages/delete/${id}`)
         .then((r) => {
             store.dispatch("fetchBouquetMessages", "bouquetMessages");
         })
@@ -125,7 +125,7 @@ export default {
     },
     getBouquetMessage(id) {
       axios
-        .get(`http://localhost:30102/api/BouquetsMessages/${id}`)
+        .get(`http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/BouquetsMessages/${id}`)
         .then((r) => {
           this.bouquetMessage = r.data;
         })

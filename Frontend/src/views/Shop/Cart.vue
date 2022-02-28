@@ -144,84 +144,8 @@
         <div class="zigzag-bottom"></div>
         <div class="container">
           <div class="row">
-            <div class="col-md-4">
-              <div class="single-sidebar">
-                <h2 class="sidebar-title">Search Products</h2>
-                <form action="#">
-                  <input type="text" placeholder="Search products..." />
-                  <input type="submit" value="Search" />
-                </form>
-              </div>
 
-              <div class="single-sidebar">
-                <h2 class="sidebar-title">Products</h2>
-                <div class="thubmnail-recent">
-                  <img
-                    src="img/product-thumb-1.jpg"
-                    class="recent-thumb"
-                    alt=""
-                  />
-                  <h2>
-                    <a href="single-product.html">Sony Smart TV - 2015</a>
-                  </h2>
-                  <div class="product-sidebar-price">
-                    <ins>$700.00</ins> <del>$800.00</del>
-                  </div>
-                </div>
-                <div class="thubmnail-recent">
-                  <img
-                    src="img/product-thumb-1.jpg"
-                    class="recent-thumb"
-                    alt=""
-                  />
-                  <h2>
-                    <a href="single-product.html">Sony Smart TV - 2015</a>
-                  </h2>
-                  <div class="product-sidebar-price">
-                    <ins>$700.00</ins> <del>$800.00</del>
-                  </div>
-                </div>
-                <div class="thubmnail-recent">
-                  <img
-                    src="img/product-thumb-1.jpg"
-                    class="recent-thumb"
-                    alt=""
-                  />
-                  <h2>
-                    <a href="single-product.html">Sony Smart TV - 2015</a>
-                  </h2>
-                  <div class="product-sidebar-price">
-                    <ins>$700.00</ins> <del>$800.00</del>
-                  </div>
-                </div>
-                <div class="thubmnail-recent">
-                  <img
-                    src="img/product-thumb-1.jpg"
-                    class="recent-thumb"
-                    alt=""
-                  />
-                  <h2>
-                    <a href="single-product.html">Sony Smart TV - 2015</a>
-                  </h2>
-                  <div class="product-sidebar-price">
-                    <ins>$700.00</ins> <del>$800.00</del>
-                  </div>
-                </div>
-              </div>
-
-              <div class="single-sidebar">
-                <h2 class="sidebar-title">Recent Posts</h2>
-                <ul>
-                  <li><a href="#">Sony Smart TV - 2015</a></li>
-                  <li><a href="#">Sony Smart TV - 2015</a></li>
-                  <li><a href="#">Sony Smart TV - 2015</a></li>
-                  <li><a href="#">Sony Smart TV - 2015</a></li>
-                  <li><a href="#">Sony Smart TV - 2015</a></li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="col-md-8">
+            <div class="col-md-12">
               <div class="product-content-right">
                 <div class="woocommerce">
                   <form method="post" action="#">
@@ -763,16 +687,6 @@
             </div>
 
             <div class="col-md-3 col-sm-6">
-              <div class="footer-menu">
-                <h2 class="footer-wid-title">Categories</h2>
-                <ul>
-                  <li><a href="#">Mobile Phone</a></li>
-                  <li><a href="#">Home accesseries</a></li>
-                  <li><a href="#">LED TV</a></li>
-                  <li><a href="#">Computer</a></li>
-                  <li><a href="#">Gadets</a></li>
-                </ul>
-              </div>
             </div>
 
             <div class="col-md-3 col-sm-6">
@@ -871,8 +785,8 @@ export default {
   },
 
   mounted() {
-    this.getProduct();
-    this.getRelatedProducts();
+    // this.getProduct();
+    // this.getRelatedProducts();
     // this.getGiaCayProducts();
     loadScript("https://code.jquery.com/jquery.min.js");
     loadScript(
@@ -882,9 +796,9 @@ export default {
     this.swiper.slideTo(3, 1000, false);
   },
   methods: {
-    async getProduct() {
+    async getCartItems() {
       await axios
-        .get(`https://localhost:5001/api/Bouquets/${this.$route.params.id}`)
+        .get(`https://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Bouquets/${this.$route.params.id}`)
         .then((response) => {
           this.product = response.data;
         })
@@ -894,7 +808,7 @@ export default {
     },
     async getRelatedProducts() {
       await axios
-        .get("https://localhost:5001/api/Bouquets")
+        .get(`https://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Bouquets`)
         .then((response) => {
           _.map(response.data, (item) => {
             console.log(item);

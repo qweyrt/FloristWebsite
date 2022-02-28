@@ -12,7 +12,7 @@ import menu from '@/menu.js'
 import NavBar from '@/components/NavBar.vue'
 import AsideMenu from '@/components/AsideMenu.vue'
 import FooterBar from '@/components/FooterBar.vue'
-
+require('dotenv').config();
 export default {
   name: 'Home',
   components: {

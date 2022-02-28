@@ -169,7 +169,7 @@ export default {
         headers: { "content-type": "application/json" },
       };
       axios
-        .post("http://localhost:5001/api/BouquetsMessages/add", parse, options)
+        .post(`http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/BouquetsMessages/add`, parse, options)
         .then((response) => {
             store.dispatch("fetchBouquetMessages", "bouquetMessages");
         });
@@ -185,7 +185,7 @@ export default {
       };
       axios
         .put(
-          "http://localhost:30102/api/BouquetsMessages/update",
+          `http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/BouquetsMessages/update`,
           parse,
           options
         )

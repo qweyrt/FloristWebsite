@@ -226,7 +226,7 @@ export default {
         headers: { "content-type": "application/json" },
       };
       axios
-        .post("http://localhost:5001/api/Recipients/add", parse, options)
+        .post(`http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Recipients/add`, parse, options)
         .then((response) => {
           if (response.data) {
             store.dispatch("fetchRecipients", "recipients");
@@ -246,7 +246,7 @@ export default {
         headers: { "content-type": "application/json" },
       };
       axios
-        .put("http://localhost:30102/api/Recipients/update", parse, options)
+        .put(`http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Recipients/update`, parse, options)
         .then((response) => {
             store.dispatch("fetchRecipients", "recipients");
         });

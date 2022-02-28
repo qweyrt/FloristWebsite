@@ -146,7 +146,7 @@ export default {
     },
     deleteCart(id) {
       axios
-        .delete(`http://localhost:30102/api/Carts/delete/${id}`)
+        .delete(`http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Carts/delete/${id}`)
         .then((r) => {
           store.dispatch("fetchCarts", "carts");
         })
@@ -156,7 +156,7 @@ export default {
     },
     getCart(id) {
       axios
-        .get(`http://localhost:30102/api/Carts/${id}`)
+        .get(`http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Carts/${id}`)
         .then((r) => {
           this.cart = r.data;
         })

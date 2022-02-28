@@ -136,7 +136,7 @@ export default {
     },
     deleteCustomer(id) {
       axios
-        .delete(`http://localhost:30102/api/Customers/delete/${id}`)
+        .delete(`http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Customers/delete/${id}`)
         .then((r) => {
           store.dispatch("fetchCustomers", "customers");
         })
@@ -146,7 +146,7 @@ export default {
     },
     getCustomer(id) {
       axios
-        .get(`http://localhost:30102/api/Customers/${id}`)
+        .get(`http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Customers/${id}`)
         .then((r) => {
           this.customer = r.data;
         })

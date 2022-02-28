@@ -302,7 +302,7 @@ export default {
     async listProductsByCategory() {
       this.routeName = this.$route.params.category
       let id = 0
-      await axios.get("https://localhost:5001/api/Data/categories").then((res) => {
+      await axios.get(`https://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/categories`).then((res) => {
         this.categories = res.data;
       });
       _.map(this.categories, (category) =>{
@@ -314,7 +314,7 @@ export default {
       console.log(id)
       //khong chac chan
       await axios
-        .get(`https://localhost:5001/api/Data/bouquets-by-categories/${id}`)
+        .get(`https://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/bouquets-by-categories/${id}`)
         .then((response) => {
           console.log(response.data)
           _.map(response.data, (item) => {

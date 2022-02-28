@@ -417,7 +417,7 @@ export default {
   methods: {
     async getProduct() {
       await axios
-        .get(`https://localhost:5001/api/Bouquets/${this.$route.params.id}`)
+        .get(`https://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Bouquets/${this.$route.params.id}`)
         .then((response) => {
           this.product = response.data;
         })
@@ -427,7 +427,7 @@ export default {
     },
     async getRandomProducts() {
       await axios
-        .get("https://localhost:5001/api/Bouquets")
+        .get(`https://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Bouquets`)
         .then((response) => {
           _.map(response.data, (item) => {
             this.randomProducts.push(Object.assign({}, item));
@@ -442,10 +442,11 @@ export default {
     async getRelatedProducts(product) {
       await axios
         .get(
-          `https://localhost:5001/api/Data/bouquets-by-categories/${product.categoryId}`
+          `https://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/bouquets-by-categories/${product.categoryId}`
         )
         .then((response) => {
           _.map(response.data, (item) => {
+            console.log(item)
             this.relatedProducts.push(Object.assign({}, item));
           });
         })
@@ -454,7 +455,7 @@ export default {
         });
     },
     async getCategories(){
-      await axios.get("https://localhost:5001/api/Data/categories").then((res) => {
+      await axios.get(`https://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/categories`).then((res) => {
         this.categories = res.data;
       });
     }
