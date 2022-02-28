@@ -1468,9 +1468,6 @@ export default {
     };
   },
   computed: {
-    swiper() {
-      return this.$refs.mySwiper.$swiper;
-    },
   },
 
   mounted() {
@@ -1481,8 +1478,6 @@ export default {
     loadScript(
       "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"
     );
-    console.log("Current Swiper instance object", this.swiper);
-    this.swiper.slideTo(3, 1000, false);
   },
   methods: {
     async getCartTotal() {

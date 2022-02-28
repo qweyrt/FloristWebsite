@@ -51,7 +51,7 @@
                     <a href="cart.html"><i class="fa fa-user"></i> My Cart</a>
                   </li>
                   <li>
-                    <a href="checkout.html"
+                    <a href="http://localhost:8080/#/check-out"
                       ><i class="fa fa-user"></i> Checkout</a
                     >
                   </li>
@@ -420,16 +420,19 @@ export default {
   
 
   mounted() {
+    if( this.$route.params.product){
+      console.log(this.$route.params)
+      this.addToCart()
+    }
     this.getCartItems();
     this.getCategories();
     this.getRandomProducts();
     this.getCartDatas();
+    
     loadScript("https://code.jquery.com/jquery.min.js");
     loadScript(
       "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"
     );
-    console.log("Current Swiper instance object", this.swiper);
-    this.swiper.slideTo(3, 1000, false);
   },
   methods: {
     async getCartTotal() {
@@ -527,7 +530,29 @@ export default {
           this.cartsData.item = cartsDatas.length;
         }
 
-    }
+    },
+    async addToCart() {
+      await axios
+        .post(
+          `https://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Carts/add`,
+          {
+            quantity: this.$route.params.quantity?this.$route.params.quantity:1,
+            bouquetId: this.$route.params.product,
+            customerId: 1,//de ung voi khach hang
+            recipientId: 1,//de ung voi khach hang
+            bouquetMessageId: 1,//giu nguyen
+          }
+        )
+        .then((res) => {
+          if (res.status === 200) {
+            this.getCartTotal();
+            this.getCartDatas();
+          }
+        });
+    },//toi da khoc
+    //AI qua thong minh
+    //doc duoc ca suy nghi a
+    //10/10
     
     //10/10 - lam chu cong nghe copilot - nguyen van a
   },

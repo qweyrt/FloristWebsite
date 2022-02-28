@@ -213,12 +213,13 @@
                             class="input-text qty text"
                             title="Qty"
                             value="1"
+                            v-model="quantity"
                             name="quantity"
                             min="1"
                             step="1"
                           />
                         </div>
-                        <button class="add_to_cart_button" type="submit">
+                        <button class="add_to_cart_button" v-on:click="addToCart(product,quantity)" type="submit">
                           Add to cart
                         </button>
                       </form>
@@ -379,6 +380,7 @@ export default {
         total:0,
         item: 0,
       },
+      quantity:1,
       swiperOptions1: {
         slidesPerView: 3,
         spaceBetween: 30,
@@ -480,6 +482,9 @@ export default {
           this.cartsData.item = cartsDatas.length;
         }
 
+    },
+    addToCart(product,quantity){
+      this.$router.push({ path: '/cart-check', name:'Cart', params: {product,quantity }   })
     }
   },
 };
