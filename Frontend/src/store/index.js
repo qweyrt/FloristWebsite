@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
-require('dotenv').config();
+require("dotenv").config();
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
@@ -120,7 +120,9 @@ const store = new Vuex.Store({
     },
     fetchBouquets({ commit }, payload) {
       axios
-        .get(`https://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Bouquets`)
+        .get(
+          `https://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Bouquets`
+        )
         .then((r) => {
           if (r.data) {
             commit("basic", {
@@ -135,7 +137,9 @@ const store = new Vuex.Store({
     },
     fetchBouquetMessages({ commit }, payload) {
       axios
-        .get(`https://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/BouquetsMessages`)
+        .get(
+          `https://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/BouquetsMessages`
+        )
         .then((r) => {
           if (r.data) {
             commit("basic", {
@@ -150,7 +154,9 @@ const store = new Vuex.Store({
     },
     fetchCustomers({ commit }, payload) {
       axios
-        .get(`https://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/Customers`)
+        .get(
+          `https://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/Customers`
+        )
         .then((r) => {
           if (r.data) {
             commit("basic", {
@@ -165,7 +171,9 @@ const store = new Vuex.Store({
     },
     fetchRecipients({ commit }, payload) {
       axios
-        .get(`https://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/Recipients`)
+        .get(
+          `https://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/Recipients`
+        )
         .then((r) => {
           if (r.data) {
             commit("basic", {
@@ -179,36 +187,36 @@ const store = new Vuex.Store({
         });
     },
     fetchCategories({ commit }, payload) {
-    //   axios
-    //     .get(`http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/categories`)
-    //     .then((r) => {
-    //       if (r.data) {
-    //         commit("basic", {
-    //           key: payload,
-    //           value: r.data,
-    //         });
-    //       }
-    //     })
-    //     .catch((error) => {
-    //       alert(error.message);
-    //     });
+      //   axios
+      //     .get(`http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/categories`)
+      //     .then((r) => {
+      //       if (r.data) {
+      //         commit("basic", {
+      //           key: payload,
+      //           value: r.data,
+      //         });
+      //       }
+      //     })
+      //     .catch((error) => {
+      //       alert(error.message);
+      //     });
     },
     fetchCarts({ commit }, payload) {
-    //   if (id) {
-    //     axios
-    //       .delete(`https://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Bouquets/delete/${id}`)
-    //       .then((r) => {
-    //         if (r.data) {
-    //           commit("basic", {
-    //             key: payload,
-    //             value: r.data,
-    //           });
-    //         }
-    //       })
-    //       .catch((error) => {
-    //         alert(error.message);
-    //       });
-    //   }
+      //   if (id) {
+      //     axios
+      //       .delete(`https://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Bouquets/delete/${id}`)
+      //       .then((r) => {
+      //         if (r.data) {
+      //           commit("basic", {
+      //             key: payload,
+      //             value: r.data,
+      //           });
+      //         }
+      //       })
+      //       .catch((error) => {
+      //         alert(error.message);
+      //       });
+      //   }
     },
   },
 });

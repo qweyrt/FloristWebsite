@@ -94,10 +94,10 @@
 
             <div class="col-sm-6">
               <div class="shopping-item">
-                <a href="cart.html"
-                  >Cart - <span class="cart-amunt">$100</span>
+                <a href="http://localhost:8080/#/cart-check"
+                  >Cart - <span class="cart-amunt">${{cartsData.total}}</span>
                   <i class="fa fa-shopping-cart"></i>
-                  <span class="product-count">5</span></a
+                  <span class="product-count">{{cartsData.item}}</span></a
                 >
               </div>
             </div>
@@ -160,15 +160,15 @@
               <!-- lấy category (chờ db) -->
               <div class="single-sidebar">
                 <h2 class="sidebar-title" >Products</h2>
-                <div class="thubmnail-recent" v-for="randomProduct in randomProducts" v-bind:key="randomProduct.id">
+                <div class="thubmnail-recent" v-for="index in 3" v-bind:key="index">
                   <img
                     src="../Shop/img/product-thumb-1.jpg"
                     class="recent-thumb"
                     alt=""
                   />
-                  <h2><a target="_blank" :href="'http://localhost:8080/#/product/'+(randomProduct.id)">{{ randomProduct.name }}</a></h2>
+                  <h2><a target="_blank" :href="'http://localhost:8080/#/product/'+(randomProducts[index-1].id)">{{ randomProducts[index-1].name }}</a></h2>
                   <div class="product-sidebar-price">
-                    <ins>${{ randomProduct.price }}</ins> 
+                    <ins>${{ randomProducts[index-1].price }}</ins> 
                   </div>
                 </div>
                 
@@ -297,9 +297,6 @@
                 <h2 class="footer-wid-title">User Navigation</h2>
                 <ul>
                   <li><a href="">My account</a></li>
-                  <li><a href="">Order history</a></li>
-                  <li><a href="">Wishlist</a></li>
-                  <li><a href="">Vendor contact</a></li>
                   <li><a href="">Front page</a></li>
                 </ul>
               </div>
@@ -378,6 +375,10 @@ export default {
       relatedProducts: [],
       randomProducts: [],
       categories: [],
+      cartsData: {
+        total:0,
+        item: 0,
+      },
       swiperOptions1: {
         slidesPerView: 3,
         spaceBetween: 30,
@@ -400,6 +401,7 @@ export default {
     this.getProduct();
     this.getRandomProducts();
     this.getCategories();
+    this.getCartDatas();
     loadScript("https://code.jquery.com/jquery.min.js");
     loadScript(
       "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"
@@ -458,6 +460,26 @@ export default {
       await axios.get(`https://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/categories`).then((res) => {
         this.categories = res.data;
       });
+    },
+    async getCartDatas() {
+      let cartsDatas = [];
+      await axios
+        .get(
+          `https://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/cart-by-customer/1`
+        )
+        .then((response) => {
+          cartsDatas = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+        if(cartsDatas){
+          _.map(cartsDatas, (cart) => {
+            this.cartsData.total += cart.quantity * cart.bouquetPrice;
+          });
+          this.cartsData.item = cartsDatas.length;
+        }
+
     }
   },
 };

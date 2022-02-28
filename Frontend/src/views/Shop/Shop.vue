@@ -97,9 +97,9 @@
             <div class="col-sm-6">
               <div class="shopping-item">
                 <a href="cart.html"
-                  >Cart - <span class="cart-amunt">$100</span>
+                  >Cart - <span class="cart-amunt">${{cartsData.total}}</span>
                   <i class="fa fa-shopping-cart"></i>
-                  <span class="product-count">5</span></a
+                  <span class="product-count">{{cartsData.item}}</span></a
                 >
               </div>
             </div>
@@ -203,9 +203,6 @@
                 <h2 class="footer-wid-title">User Navigation</h2>
                 <ul>
                   <li><a href="">My account</a></li>
-                  <li><a href="">Order history</a></li>
-                  <li><a href="">Wishlist</a></li>
-                  <li><a href="">Vendor contact</a></li>
                   <li><a href="">Front page</a></li>
                 </ul>
               </div>
@@ -282,6 +279,10 @@ export default {
       categories: [],
       catName: '',
       routeName: '',
+      cartsData: {
+        total:0,
+        item: 0,
+      },
     };
   },
   computed: {
@@ -292,6 +293,7 @@ export default {
 
   mounted() {
     this.listProductsByCategory();
+    this.getCartDatas();
     loadScript("https://code.jquery.com/jquery.min.js");
     loadScript(
       "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"
@@ -323,6 +325,26 @@ export default {
           console.log(this.products);
         });
     },
+     async getCartDatas() {
+      let cartsDatas = [];
+      await axios
+        .get(
+          `https://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/cart-by-customer/1`
+        )
+        .then((response) => {
+          cartsDatas = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+        if(cartsDatas){
+          _.map(cartsDatas, (cart) => {
+            this.cartsData.total += cart.quantity * cart.bouquetPrice;
+          });
+          this.cartsData.item = cartsDatas.length;
+        }
+
+    }
   },
 };
 </script>

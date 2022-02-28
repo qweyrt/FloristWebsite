@@ -237,6 +237,14 @@ const routes = [
     name: 'Products',
     component: () => import(/* webpackChunkName: "client-form" */ '@/views/Shop/Shop.vue')
   },
+  {
+    meta: {
+      title: 'CheckOut'
+    },
+    path: '/check-out',
+    name: 'CheckOut',
+    component: () => import(/* webpackChunkName: "client-form" */ '@/views/Shop/CheckOut.vue')
+  },
 
 ]
 
