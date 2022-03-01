@@ -45,13 +45,10 @@
                     <a href="#"><i class="fa fa-user"></i> My Account</a>
                   </li>
                   <li>
-                    <a href="#"><i class="fa fa-heart"></i> Wishlist</a>
+                    <a target="_blank" href="http://localhost:8080/#/cart-check"><i class="fa fa-user"></i> My Cart</a>
                   </li>
                   <li>
-                    <a href="cart.html"><i class="fa fa-user"></i> My Cart</a>
-                  </li>
-                  <li>
-                    <a href="http://localhost:8080/#/check-out"
+                    <a target="_blank" href="http://localhost:8080/#/check-out"
                       ><i class="fa fa-user"></i> Checkout</a
                     >
                   </li>
@@ -81,7 +78,7 @@
 
             <div class="col-sm-6">
               <div class="shopping-item">
-                <a href="http://localhost:8080/#/cart-check"
+                <a target="_blank" href="http://localhost:8080/#/cart-check"
                   >Cart - <span class="cart-amunt">${{cartsData.total}}</span>
                   <i class="fa fa-shopping-cart"></i>
                   <span class="product-count">{{cartsData.item}}</span></a
@@ -230,6 +227,9 @@
                             >
                           </td>
                         </tr>
+                        
+                      </tbody>
+                      <tbody>
                         <tr>
                           <td class="actions" colspan="6">
                             <input
@@ -343,9 +343,6 @@
               <div class="copyright">
                 <p>
                   &copy; 2022 group 3. All Rights Reserved.
-                  <a href="http://www.freshdesignweb.com" target="_blank"
-                    >freshDesignweb.com</a
-                  >
                 </p>
               </div>
             </div>
@@ -420,14 +417,16 @@ export default {
   
 
   mounted() {
+    console.log(this.$route)
     if( this.$route.params.product){
-      console.log(this.$route.params)
       this.addToCart()
+    }else{
+       this.getCartItems();
+       this.getCartDatas();
     }
-    this.getCartItems();
     this.getCategories();
     this.getRandomProducts();
-    this.getCartDatas();
+    
     
     loadScript("https://code.jquery.com/jquery.min.js");
     loadScript(
@@ -436,9 +435,11 @@ export default {
   },
   methods: {
     async getCartTotal() {
+      let count = 0
       await _.map(this.carts, (cart) => {
-        this.total += cart.quantity * cart.bouquetPrice;
+        count += cart.quantity * cart.bouquetPrice;
       });
+      this.total = count;
     },
     async getCartItems() {
       await axios
@@ -460,9 +461,11 @@ export default {
           `https://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Carts/delete/${deletedCart.id}`
         )
         .then((res) => {
+          console.log(res)
           if (res.status === 200) {
             alert("deleted");
             this.carts.splice(index, 1);
+            this.getCartTotal();
           }
         });
     },
@@ -532,19 +535,22 @@ export default {
 
     },
     async addToCart() {
+      console.log(this.$route.params)
       await axios
         .post(
           `https://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Carts/add`,
           {
-            quantity: this.$route.params.quantity?this.$route.params.quantity:1,
-            bouquetId: this.$route.params.product,
+            quantity: this.$route.params.quantity?parseInt(this.$route.params.quantity):1,
+            bouquetId: this.$route.params.product.id,
             customerId: 1,//de ung voi khach hang
             recipientId: 1,//de ung voi khach hang
             bouquetMessageId: 1,//giu nguyen
           }
         )
         .then((res) => {
-          if (res.status === 200) {
+          console.log(res)
+          if (res.statusText === 'Created') {
+            this.getCartItems();
             this.getCartTotal();
             this.getCartDatas();
           }

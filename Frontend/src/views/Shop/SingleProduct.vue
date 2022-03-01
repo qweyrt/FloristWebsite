@@ -58,13 +58,10 @@
                     <a href="#"><i class="fa fa-user"></i> My Account</a>
                   </li>
                   <li>
-                    <a href="#"><i class="fa fa-heart"></i> Wishlist</a>
+                    <a target="_blank" href="http://localhost:8080/#/cart-check"><i class="fa fa-user"></i> My Cart</a>
                   </li>
                   <li>
-                    <a href="cart.html"><i class="fa fa-user"></i> My Cart</a>
-                  </li>
-                  <li>
-                    <a href="checkout.html"
+                    <a target="_blank" href="http://localhost:8080/#/check-out"
                       ><i class="fa fa-user"></i> Checkout</a
                     >
                   </li>
@@ -94,7 +91,7 @@
 
             <div class="col-sm-6">
               <div class="shopping-item">
-                <a href="http://localhost:8080/#/cart-check"
+                <a target="_blank" href="http://localhost:8080/#/cart-check"
                   >Cart - <span class="cart-amunt">${{cartsData.total}}</span>
                   <i class="fa fa-shopping-cart"></i>
                   <span class="product-count">{{cartsData.item}}</span></a
