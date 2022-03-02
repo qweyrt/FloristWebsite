@@ -48,7 +48,13 @@
               </b-select>
             </b-field>
             <b-field label="Image" message="Bouquet's image" horizontal>
-              <b-upload v-model="dropFiles" multiple drag-drop expanded>
+              <b-upload
+                v-model="dropFiles"
+                drag-drop
+                expanded
+                @input="uploadImage()"
+                accept=".jpg,.png,.svg,.webp"
+              >
                 <section class="section">
                   <div class="content has-text-centered">
                     <p>
@@ -59,16 +65,12 @@
                 </section>
               </b-upload>
               <div class="tags">
-                <span
-                  v-for="(file, index) in dropFiles"
-                  :key="index"
-                  class="tag is-primary"
-                >
-                  {{ file.name }}
+                <span v-if="dropFiles" class="tag is-primary">
+                  {{ dropFiles.name }}
                   <button
                     class="delete is-small"
                     type="button"
-                    @click="deleteDropFile(index)"
+                    @click="deleteDropFile()"
                   ></button>
                 </span>
               </div>
@@ -79,6 +81,7 @@
                 type="is-info"
                 :loading="isLoading"
                 native-type="submit"
+				class="text-align: center;"
               >
                 Submit
               </b-button>
@@ -86,46 +89,40 @@
           </form>
         </card-component>
         <card-component
-          v-if="isProfileExists"
           title="Bouquet Profile"
           icon="account"
           class="tile is-child"
         >
           <hr />
-          <b-field label="Name">
+          <b-field v-if="isProfileExists" label="Name">
             <b-input :value="form.name" custom-class="is-static" readonly />
           </b-field>
-          <b-field label="Price">
+          <b-field v-if="isProfileExists" label="Price">
             <b-input :value="form.price" custom-class="is-static" readonly />
           </b-field>
-          <b-field label="Description">
+          <b-field v-if="isProfileExists" label="Description">
             <b-input
               :value="form.description"
               custom-class="is-static"
               readonly
             />
           </b-field>
-          <b-field label="Category">
+          <b-field v-if="isProfileExists" label="Category">
             <b-input
               :value="form.categoryName"
               custom-class="is-static"
               readonly
             />
           </b-field>
-          <b-field label="Image">
-            <b-upload v-model="dropFiles" multiple drag-drop>
-              <section class="section">
-                <div class="content has-text-centered">
-                  <p>
-                    <b-icon icon="upload" size="is-large"> </b-icon>
-                  </p>
-                  <p>Drop your files here or click to upload</p>
-                </div>
-              </section>
-            </b-upload>
+          <b-field  label="Image">
+            <b-image
+			v-if="form.images"
+              :src="form.images"
+              ratio="1by1"			
+            ></b-image>
           </b-field>
         </card-component>
-      </tiles>
+      </tiles>	  
     </section>
   </div>
 </template>
@@ -174,7 +171,7 @@ export default {
         categoryName: null,
       },
       createdReadable: null,
-      dropFiles: [],
+      dropFiles: null,
     };
   },
   computed: {
@@ -236,6 +233,7 @@ export default {
           this.form.images = item.images;
           this.form.categoryId = item.categoryId;
           this.form.categoryName = item.categoryName;
+		  this.dropFiles = item.images;
         } else {
           this.$router.push({ name: "bouquets.new" });
         }
@@ -246,16 +244,20 @@ export default {
         name: this.form.name,
         price: parseInt(this.form.price),
         description: this.form.description,
-        images: JSON.stringify(this.dropFiles),
+        images: this.form.images,
         categoryId: this.form.categoryId,
       };
       var parse = JSON.stringify(bouquet);
-		console.log(this.dropFiles)
+      console.log(this.form.images);
       const options = {
         headers: { "content-type": "application/json" },
       };
       axios
-        .post(`http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Bouquets/add`, parse, options)
+        .post(
+          `http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Bouquets/add`,
+          parse,
+          options
+        )
         .then((response) => {
           store.dispatch("fetchBouquets", "bouquets");
         });
@@ -274,16 +276,34 @@ export default {
         headers: { "content-type": "application/json" },
       };
       axios
-        .put(`http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Bouquets/update`, parse, options)
+        .put(
+          `http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Bouquets/update`,
+          parse,
+          options
+        )
         .then((response) => {
           store.dispatch("fetchBouquets", "bouquets");
         });
     },
-    deleteDropFile(index) {
-      this.dropFiles.splice(index, 1);
+    deleteDropFile() {
+      //   this.dropFiles.splice(index, 0);
+      //   this.uploadImage();
+      this.dropFiles = null;
+	  this.form.images = null;
     },
     dateInput(v) {
       this.createdReadable = new Date(v).toLocaleDateString();
+    },
+    uploadImage() {
+      console.log(this.dropFiles);
+
+      const reader = new FileReader();
+      reader.readAsDataURL(this.dropFiles);
+
+      reader.onloadend = () => {
+        this.form.images = reader.result;
+        console.log(this.form.images);
+      };
     },
     submit() {
       this.isLoading = true;
