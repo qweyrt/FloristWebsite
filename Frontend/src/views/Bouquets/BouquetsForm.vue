@@ -53,7 +53,7 @@
                 drag-drop
                 expanded
                 @input="uploadImage()"
-                accept=".jpg,.png,.svg,.webp"
+                accept=".jpg,.png,.svg,.webp,.jpeg"
               >
                 <section class="section">
                   <div class="content has-text-centered">

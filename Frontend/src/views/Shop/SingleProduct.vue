@@ -159,7 +159,7 @@
                 <h2 class="sidebar-title" >Products</h2>
                 <div class="thubmnail-recent" v-for="index in 3" v-bind:key="index">
                   <img
-                    src="../Shop/img/product-thumb-1.jpg"
+                    :src="randomProducts[index-1].images"
                     class="recent-thumb"
                     alt=""
                   />
@@ -184,7 +184,7 @@
                   <div class="col-sm-6">
                     <div class="product-images">
                       <div class="product-main-img">
-                        <img src="img/product-2.jpg" alt="" />
+                        <img :src="product.images" alt="" />
                       </div>
 
                       <div class="product-gallery">
@@ -262,7 +262,7 @@
                       v-for="relatedProduct in relatedProducts"
                     >
                       <div>
-                        <img src="../Shop/img/product-4.jpg" alt="" />
+                        <img :src="relatedProduct.images" alt="" />
                       </div>
                       <h2>
                         <a target="_blank" :href="'http://localhost:8080/#/product/'+(relatedProduct.id)">{{ relatedProduct.name }}</a>

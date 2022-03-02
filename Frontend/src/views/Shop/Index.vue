@@ -36,10 +36,16 @@
                       <a href="#"><i class="fa fa-user"></i> My Account</a>
                     </li>
                     <li>
-                      <a target="_blank"  href="http://localhost:8080/#/cart-check"><i class="fa fa-user"></i> My Cart</a>
+                      <a
+                        target="_blank"
+                        href="http://localhost:8080/#/cart-check"
+                        ><i class="fa fa-user"></i> My Cart</a
+                      >
                     </li>
                     <li>
-                      <a target="_blank" href="http://localhost:8080/#/check-out"
+                      <a
+                        target="_blank"
+                        href="http://localhost:8080/#/check-out"
                         ><i class="fa fa-user"></i> Checkout</a
                       >
                     </li>
@@ -70,9 +76,10 @@
               <div class="col-sm-6">
                 <div class="shopping-item">
                   <a target="_blank" href="http://localhost:8080/#/cart-check"
-                    >Cart - <span class="cart-amunt">${{cartsData.total}}</span>
+                    >Cart -
+                    <span class="cart-amunt">${{ cartsData.total }}</span>
                     <i class="fa fa-shopping-cart"></i>
-                    <span class="product-count">{{cartsData.item}}</span></a
+                    <span class="product-count">{{ cartsData.item }}</span></a
                   >
                 </div>
               </div>
@@ -194,7 +201,7 @@
           <swiper class="swiper container" :options="swiperOptions1">
             <swiper-slide v-bind:key="product.id" v-for="product in products">
               <div>
-                <img src="../Shop/img/product-4.jpg" alt="" />
+                <img :src="product.images" alt="" />
               </div>
               <h2>
                 <a href="single-product.html">{{ product.name }}</a>
@@ -250,9 +257,14 @@
                     v-bind:key="brithdayProduct.id"
                   >
                     <div class="single-wid-product">
-                      <a href="single-product.html"
+                      <a
+                        target="_blank"
+                        :href="
+                          'http://localhost:8080/#/product/' +
+                          brithdayProduct.id
+                        "
                         ><img
-                          src="img/product-thumb-1.jpg"
+                          :src="brithdayProduct.images"
                           alt=""
                           class="product-thumb"
                       /></a>
@@ -287,9 +299,14 @@
                     v-bind:key="christmasProduct.id"
                   >
                     <div class="single-wid-product">
-                      <a href="single-product.html"
+                      <a
+                        target="_blank"
+                        :href="
+                          'http://localhost:8080/#/product/' +
+                          christmasProduct.id
+                        "
                         ><img
-                          src="img/product-thumb-1.jpg"
+                          :src="christmasProduct.images"
                           alt=""
                           class="product-thumb"
                       /></a>
@@ -324,9 +341,14 @@
                     v-bind:key="anniversaryProduct.id"
                   >
                     <div class="single-wid-product">
-                      <a href="single-product.html"
+                      <a
+                        target="_blank"
+                        :href="
+                          'http://localhost:8080/#/product/' +
+                          anniversaryProduct.id
+                        "
                         ><img
-                          src="img/product-thumb-1.jpg"
+                          :src="anniversaryProduct.images"
                           alt=""
                           class="product-thumb"
                       /></a>
@@ -453,7 +475,7 @@ export default {
       christmasProducts: [],
       anniversaryProducts: [],
       cartsData: {
-        total:0,
+        total: 0,
         item: 0,
       },
       swiperOptions1: {
@@ -520,7 +542,9 @@ export default {
     },
     async getRelatedProducts() {
       await axios
-        .get(`${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/bouquets-by-categories/1`)
+        .get(
+          `${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/bouquets-by-categories/1`
+        )
         .then((response) => {
           _.map(response.data, (item) => {
             this.brithdayProducts.push(Object.assign({}, item));
@@ -531,7 +555,9 @@ export default {
           console.log(error);
         });
       await axios
-        .get(`${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/bouquets-by-categories/2`)
+        .get(
+          `${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/bouquets-by-categories/2`
+        )
         .then((response) => {
           _.map(response.data, (item) => {
             this.christmasProducts.push(Object.assign({}, item));
@@ -541,7 +567,9 @@ export default {
           console.log(error);
         });
       await axios
-        .get(`${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/bouquets-by-categories/3`)
+        .get(
+          `${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/bouquets-by-categories/3`
+        )
         .then((response) => {
           _.map(response.data, (item) => {
             this.anniversaryProducts.push(Object.assign({}, item));
@@ -563,15 +591,14 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-        console.log(cartsDatas);
-        if(cartsDatas){
-          _.map(cartsDatas, (cart) => {
-            this.cartsData.total += cart.quantity * cart.bouquetPrice;
-          });
-          this.cartsData.item = cartsDatas.length;
-        }
-
-    }
+      console.log(cartsDatas);
+      if (cartsDatas) {
+        _.map(cartsDatas, (cart) => {
+          this.cartsData.total += cart.quantity * cart.bouquetPrice;
+        });
+        this.cartsData.item = cartsDatas.length;
+      }
+    },
   },
 };
 </script>
