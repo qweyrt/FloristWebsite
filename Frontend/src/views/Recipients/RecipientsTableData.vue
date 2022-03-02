@@ -120,7 +120,7 @@ export default {
     },
     deleteRecipient(id) {
       axios
-        .delete(`http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Recipients/delete/${id}`)
+        .delete(`${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Recipients/delete/${id}`)
         .then((r) => {
           store.dispatch("fetchRecipients", "recipients");
         })
@@ -130,7 +130,7 @@ export default {
     },
     getRecipient(id) {
       axios
-        .get(`http://localhost::${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Recipients/${id}`)
+        .get(`${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Recipients/${id}`)
         .then((r) => {
           this.recipient = r.data;
         })

@@ -254,7 +254,7 @@ export default {
       };
       axios
         .post(
-          `http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Bouquets/add`,
+          `${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Bouquets/add`,
           parse,
           options
         )
@@ -277,7 +277,7 @@ export default {
       };
       axios
         .put(
-          `http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Bouquets/update`,
+          `${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Bouquets/update`,
           parse,
           options
         )

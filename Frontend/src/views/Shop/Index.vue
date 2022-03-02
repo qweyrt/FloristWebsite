@@ -504,7 +504,7 @@ export default {
   methods: {
     async listProducts() {
       await axios
-        .get(`http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Bouquets`)
+        .get(`${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Bouquets`)
         .then((response) => {
           _.map(response.data, (item) => {
             this.products.push(Object.assign({}, item));
@@ -513,14 +513,14 @@ export default {
     },
     async getCategories() {
       await axios
-        .get(`http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/categories`)
+        .get(`${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/categories`)
         .then((res) => {
           this.categories = res.data;
         });
     },
     async getRelatedProducts() {
       await axios
-        .get(`http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/bouquets-by-categories/1`)
+        .get(`${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/bouquets-by-categories/1`)
         .then((response) => {
           _.map(response.data, (item) => {
             this.brithdayProducts.push(Object.assign({}, item));
@@ -531,7 +531,7 @@ export default {
           console.log(error);
         });
       await axios
-        .get(`http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/bouquets-by-categories/2`)
+        .get(`${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/bouquets-by-categories/2`)
         .then((response) => {
           _.map(response.data, (item) => {
             this.christmasProducts.push(Object.assign({}, item));
@@ -541,7 +541,7 @@ export default {
           console.log(error);
         });
       await axios
-        .get(`http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/bouquets-by-categories/3`)
+        .get(`${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/bouquets-by-categories/3`)
         .then((response) => {
           _.map(response.data, (item) => {
             this.anniversaryProducts.push(Object.assign({}, item));
@@ -555,7 +555,7 @@ export default {
       let cartsDatas = [];
       await axios
         .get(
-          `http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/cart-by-customer/1`
+          `${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/cart-by-customer/1`
         )
         .then((response) => {
           cartsDatas = response.data;

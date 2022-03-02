@@ -299,7 +299,7 @@ export default {
     async listProductsByCategory() {
       this.routeName = this.$route.params.category
       let id = 0
-      await axios.get(`http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/categories`).then((res) => {
+      await axios.get(`${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/categories`).then((res) => {
         this.categories = res.data;
       });
       _.map(this.categories, (category) =>{
@@ -311,7 +311,7 @@ export default {
       console.log(id)
       //khong chac chan
       await axios
-        .get(`http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/bouquets-by-categories/${id}`)
+        .get(`${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/bouquets-by-categories/${id}`)
         .then((response) => {
           console.log(response.data)
           _.map(response.data, (item) => {
@@ -324,7 +324,7 @@ export default {
       let cartsDatas = [];
       await axios
         .get(
-          `http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/cart-by-customer/1`
+          `${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/cart-by-customer/1`
         )
         .then((response) => {
           cartsDatas = response.data;

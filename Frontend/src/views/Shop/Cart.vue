@@ -444,7 +444,7 @@ export default {
     async getCartItems() {
       await axios
         .get(
-          `http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/cart-by-customer/1`
+          `${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/cart-by-customer/1`
         )
         .then((response) => {
           this.carts = response.data;
@@ -458,7 +458,7 @@ export default {
       const deletedCart = this.carts[index];
       await axios
         .delete(
-          `http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Carts/delete/${deletedCart.id}`
+          `${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Carts/delete/${deletedCart.id}`
         )
         .then((res) => {
           console.log(res)
@@ -471,7 +471,7 @@ export default {
     },
     async getRandomProducts() {
       await axios
-        .get(`http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Bouquets`)
+        .get(`${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Bouquets`)
         .then((response) => {
           _.map(response.data, (item) => {
             this.randomProducts.push(Object.assign({}, item));
@@ -487,7 +487,7 @@ export default {
       _.map(this.carts, (cart) => {
         axios
           .put(
-            `http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Carts/update`,
+            `${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Carts/update`,
             {
               id: cart.id,
               quantity: cart.quantity,
@@ -509,7 +509,7 @@ export default {
     },
     async getCategories() {
       await axios
-        .get(`http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/categories`)
+        .get(`${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/categories`)
         .then((res) => {
           this.categories = res.data;
         });
@@ -518,7 +518,7 @@ export default {
       let cartsDatas = [];
       await axios
         .get(
-          `http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/cart-by-customer/1`
+          `${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/cart-by-customer/1`
         )
         .then((response) => {
           cartsDatas = response.data;
@@ -538,7 +538,7 @@ export default {
       console.log(this.$route.params)
       await axios
         .post(
-          `http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Carts/add`,
+          `${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Carts/add`,
           {
             quantity: this.$route.params.quantity?parseInt(this.$route.params.quantity):1,
             bouquetId: this.$route.params.product.id,

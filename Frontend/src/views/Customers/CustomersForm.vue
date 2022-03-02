@@ -243,7 +243,7 @@ export default {
         headers: { "content-type": "application/json" },
       };
       axios
-        .post(`http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Customers/add`, parse, options)
+        .post(`${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Customers/add`, parse, options)
         .then((response) => {
           store.dispatch("fetchCustomers", "customers");
         });
@@ -262,7 +262,7 @@ export default {
         headers: { "content-type": "application/json" },
       };
       axios
-        .put(`http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Customers/update`, parse, options)
+        .put(`${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Customers/update`, parse, options)
         .then((response) => {
           store.dispatch("fetchCustomers", "customers");
         });

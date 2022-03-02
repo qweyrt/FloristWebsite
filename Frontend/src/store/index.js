@@ -121,7 +121,7 @@ const store = new Vuex.Store({
 		fetchBouquets({ commit },payload) {
 			axios
 				.get(
-					`http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Bouquets`
+					`${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Bouquets`
 				)
 				.then((r) => {
 					if (r.data) {
@@ -138,7 +138,7 @@ const store = new Vuex.Store({
 		fetchBouquetMessages({ commit },payload) {
 			axios
 				.get(
-					`http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/BouquetsMessages`
+					`${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/BouquetsMessages`
 				)
 				.then((r) => {
 					if (r.data) {
@@ -155,7 +155,7 @@ const store = new Vuex.Store({
 		fetchCustomers({ commit },payload) {
 			axios
 				.get(
-					`http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/Customers`
+					`${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/Customers`
 				)
 				.then((r) => {
 					if (r.data) {
@@ -172,7 +172,7 @@ const store = new Vuex.Store({
 		fetchRecipients({ commit },payload) {
 			axios
 				.get(
-					`http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/Recipients`
+					`${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/Recipients`
 				)
 				.then((r) => {
 					if (r.data) {
@@ -188,7 +188,7 @@ const store = new Vuex.Store({
 		},
 		fetchCategories({ commit },payload) {
 			  axios
-			    .get(`http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/categories`)
+			    .get(`${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/categories`)
 			    .then((r) => {
 			      if (r.data) {
 			        commit("basic", {
@@ -203,7 +203,7 @@ const store = new Vuex.Store({
 		},
 		fetchCarts({ commit },payload) {
 			axios
-				.get(`http://localhost:${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Carts`)
+				.get(`${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Carts`)
 				.then((r) => {
 					if (r.data) {
 						commit("basic",{
