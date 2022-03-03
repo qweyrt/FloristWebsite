@@ -379,7 +379,7 @@ export default {
       },
       quantity:1,
       swiperOptions1: {
-        slidesPerView: 3,
+        slidesPerView: 5,
         spaceBetween: 30,
         navigation: {
           el: ".swiper-pagination",

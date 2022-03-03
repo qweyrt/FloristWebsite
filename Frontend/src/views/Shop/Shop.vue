@@ -154,8 +154,8 @@
       <div class="single-product-area">
         <div class="zigzag-bottom"></div>
         <div class="container">
-          <div class="row" v-for="(product,index) in products" v-bind:key="product.id">
-            <div class="col-md-3 col-sm-6">
+          <div class="row" >
+            <div class="col-md-3 col-sm-6" v-for="(product,index) in products" v-bind:key="product.id">
               <div class="single-shop-product">
                 <div class="product-upper">
                   <img :src="product.images" alt="" />

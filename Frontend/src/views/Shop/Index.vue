@@ -136,24 +136,44 @@
 
         <swiper ref="mySwiper" class="container" :options="swiperOptions2">
           <swiper-slide class="block-slider">
-            <img src="../Shop/img/h4-slide.png" alt="Slide" />
+            <img src="../Shop/img/home-12.jpeg" alt="Slide" />
             <div class="caption-group">
               <h2 class="caption title">
-                iPhone <span class="primary">6 <strong>Plus</strong></span>
+                 <span class="primary"> <strong>Birthday Blooms</strong></span>
               </h2>
-              <h4 class="caption subtitle">Dual SIM</h4>
               <a class="caption button-radius" href="#"
-                ><span class="icon"></span>Shop now</a
+                ><span class="icon"></span>Shop All Birthday Flowers & Gifts</a
               >
             </div>
           </swiper-slide>
           <swiper-slide class="block-slider">
-            <img src="../Shop/img/h4-slide.png" alt="Slide" />
+            <img src="../Shop/img/home-24.jpeg" alt="Slide" />
             <div class="caption-group">
               <h2 class="caption title">
-                iPhone <span class="primary">6 <strong>Plus</strong></span>
+                 <span class="primary"> <strong>Need It Today?</strong></span>
               </h2>
-              <h4 class="caption subtitle">Dual SIM</h4>
+              <a class="caption button-radius" href="#"
+                ><span class="icon"></span>Shop All Same Day Flowers</a
+              >
+            </div>
+          </swiper-slide>
+          <swiper-slide class="block-slider">
+            <img src="../Shop/img/home-29.jpeg" alt="Slide" />
+            <div class="caption-group">
+              <h2 class="caption title">
+                 <span class="primary"> <strong>Say I Love You</strong></span>
+              </h2>
+              <a class="caption button-radius" href="#"
+                ><span class="icon"></span>Shop Love & Romance</a
+              >
+            </div>
+          </swiper-slide>
+          <swiper-slide class="block-slider">
+            <img src="../Shop/img/home-31.jpeg" alt="Slide" />
+            <div class="caption-group">
+              <h2 class="caption title">
+                 <span class="primary"> <strong>Send Your Love</strong></span>
+              </h2>
               <a class="caption button-radius" href="#"
                 ><span class="icon"></span>Shop now</a
               >
@@ -204,10 +224,12 @@
                 <img :src="product.images" alt="" />
               </div>
               <h2>
-                <a href="single-product.html">{{ product.name }}</a>
+                <a :href="'http://localhost:8080/#/product/' + product.id">{{
+                  product.name
+                }}</a>
               </h2>
               <div class="product-carousel-price">
-                <ins>${{ product.price }}</ins> <del>$225.00</del>
+                <ins>${{ product.price }}</ins>
               </div>
             </swiper-slide>
             <div class="swiper-pagination" slot="pagination"></div>
@@ -216,27 +238,6 @@
 
         <!-- End main content area -->
 
-        <div class="brands-area">
-          <div class="zigzag-bottom"></div>
-          <div class="container">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="brand-wrapper">
-                  <div class="brand-list">
-                    <img src="img/brand1.png" alt="" />
-                    <img src="img/brand2.png" alt="" />
-                    <img src="img/brand3.png" alt="" />
-                    <img src="img/brand4.png" alt="" />
-                    <img src="img/brand5.png" alt="" />
-                    <img src="img/brand6.png" alt="" />
-                    <img src="img/brand1.png" alt="" />
-                    <img src="img/brand2.png" alt="" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
         <!-- End brands area -->
 
         <div class="product-widget-area">
@@ -252,19 +253,16 @@
                     class="wid-view-more"
                     >View All</a
                   >
-                  <div
-                    v-for="brithdayProduct in brithdayProducts"
-                    v-bind:key="brithdayProduct.id"
-                  >
+                  <div v-for="index in 3" v-bind:key="index">
                     <div class="single-wid-product">
                       <a
                         target="_blank"
                         :href="
                           'http://localhost:8080/#/product/' +
-                          brithdayProduct.id
+                          brithdayProducts[index - 1].id
                         "
                         ><img
-                          :src="brithdayProduct.images"
+                          :src="brithdayProducts[index - 1].images"
                           alt=""
                           class="product-thumb"
                       /></a>
@@ -273,13 +271,13 @@
                           target="_blank"
                           :href="
                             'http://localhost:8080/#/product/' +
-                            brithdayProduct.id
+                            brithdayProducts[index - 1].id
                           "
-                          >{{ brithdayProduct.name }}</a
+                          >{{ brithdayProducts[index - 1].name }}</a
                         >
                       </h2>
                       <div class="product-wid-price">
-                        <ins>${{ brithdayProduct.price }}</ins>
+                        <ins>${{ brithdayProducts[index - 1].price }}</ins>
                       </div>
                     </div>
                   </div>
@@ -294,19 +292,16 @@
                     class="wid-view-more"
                     >View All</a
                   >
-                  <div
-                    v-for="christmasProduct in christmasProducts"
-                    v-bind:key="christmasProduct.id"
-                  >
+                  <div v-for="index in 3" v-bind:key="index">
                     <div class="single-wid-product">
                       <a
                         target="_blank"
                         :href="
                           'http://localhost:8080/#/product/' +
-                          christmasProduct.id
+                          christmasProducts[index - 1].id
                         "
                         ><img
-                          :src="christmasProduct.images"
+                          :src="christmasProducts[index - 1].images"
                           alt=""
                           class="product-thumb"
                       /></a>
@@ -315,13 +310,13 @@
                           target="_blank"
                           :href="
                             'http://localhost:8080/#/product/' +
-                            christmasProduct.id
+                            christmasProducts[index - 1].id
                           "
-                          >{{ christmasProduct.name }}</a
+                          >{{ christmasProducts[index - 1].name }}</a
                         >
                       </h2>
                       <div class="product-wid-price">
-                        <ins>${{ christmasProduct.price }}</ins>
+                        <ins>${{ christmasProducts[index - 1].price }}</ins>
                       </div>
                     </div>
                   </div>
@@ -336,19 +331,16 @@
                     class="wid-view-more"
                     >View All</a
                   >
-                  <div
-                    v-for="anniversaryProduct in anniversaryProducts"
-                    v-bind:key="anniversaryProduct.id"
-                  >
+                  <div v-for="index in 3" v-bind:key="index">
                     <div class="single-wid-product">
                       <a
                         target="_blank"
                         :href="
                           'http://localhost:8080/#/product/' +
-                          anniversaryProduct.id
+                          anniversaryProducts[index - 1].id
                         "
                         ><img
-                          :src="anniversaryProduct.images"
+                          :src="anniversaryProducts[index - 1].images"
                           alt=""
                           class="product-thumb"
                       /></a>
@@ -357,13 +349,13 @@
                           target="_blank"
                           :href="
                             'http://localhost:8080/#/product/' +
-                            anniversaryProduct.id
+                            anniversaryProducts[index - 1].id
                           "
-                          >{{ anniversaryProduct.name }}</a
+                          >{{ anniversaryProducts[index - 1].name }}</a
                         >
                       </h2>
                       <div class="product-wid-price">
-                        <ins>${{ anniversaryProduct.price }}</ins>
+                        <ins>${{ anniversaryProducts[index - 1].price }}</ins>
                       </div>
                     </div>
                   </div>
@@ -465,7 +457,7 @@ export default {
     this.$store.dispatch("toggleFullPage", true);
   },
   beforeDestroy() {
-    this.$store.dispatch("toggleFullPage", false);
+    this.$store.dispatch("toggleFullPage", true);
   },
   data() {
     return {
@@ -479,7 +471,7 @@ export default {
         item: 0,
       },
       swiperOptions1: {
-        slidesPerView: 3,
+        slidesPerView: 5,
         spaceBetween: 30,
         navigation: {
           el: ".swiper-pagination",
@@ -531,6 +523,7 @@ export default {
           _.map(response.data, (item) => {
             this.products.push(Object.assign({}, item));
           });
+          _.shuffle(this.products)
         });
     },
     async getCategories() {

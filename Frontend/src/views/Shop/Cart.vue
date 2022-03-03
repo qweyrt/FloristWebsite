@@ -45,7 +45,9 @@
                     <a href="#"><i class="fa fa-user"></i> My Account</a>
                   </li>
                   <li>
-                    <a target="_blank" href="http://localhost:8080/#/cart-check"><i class="fa fa-user"></i> My Cart</a>
+                    <a target="_blank" href="http://localhost:8080/#/cart-check"
+                      ><i class="fa fa-user"></i> My Cart</a
+                    >
                   </li>
                   <li>
                     <a target="_blank" href="http://localhost:8080/#/check-out"
@@ -79,9 +81,9 @@
             <div class="col-sm-6">
               <div class="shopping-item">
                 <a target="_blank" href="http://localhost:8080/#/cart-check"
-                  >Cart - <span class="cart-amunt">${{cartsData.total}}</span>
+                  >Cart - <span class="cart-amunt">${{ cartsData.total }}</span>
                   <i class="fa fa-shopping-cart"></i>
-                  <span class="product-count">{{cartsData.item}}</span></a
+                  <span class="product-count">{{ cartsData.item }}</span></a
                 >
               </div>
             </div>
@@ -107,14 +109,26 @@
               </button>
             </div>
             <div class="navbar-collapse collapse">
-               <ul class="nav navbar-nav" >
-                <li><a target="_blank" href="http://localhost:8080/#/shop">Home</a></li>
-
+              <ul class="nav navbar-nav">
+                <li>
+                  <a target="_blank" href="http://localhost:8080/#/shop"
+                    >Home</a
+                  >
+                </li>
               </ul>
-              
-              <ul class="nav navbar-nav" v-for="(category) in categories" v-bind:key="category.id">
-                <li><a target="_blank" :href="'http://localhost:8080/#/products/'+category.name">{{category.name}}</a></li>
 
+              <ul
+                class="nav navbar-nav"
+                v-for="category in categories"
+                v-bind:key="category.id"
+              >
+                <li>
+                  <a
+                    target="_blank"
+                    :href="'http://localhost:8080/#/products/' + category.name"
+                    >{{ category.name }}</a
+                  >
+                </li>
               </ul>
             </div>
           </div>
@@ -169,13 +183,17 @@
                           </td>
 
                           <td class="product-thumbnail">
-                            <a href="single-product.html"
+                            <a
+                              :href="
+                                'http://localhost:8080/#/products/' +
+                                cart.bouquetId
+                              "
                               ><img
                                 width="145"
                                 height="145"
                                 alt="poster_1_up"
                                 class="shop_thumbnail"
-                                src="img/product-thumb-2.jpg"
+                                :src="cart.bouquetImages"
                             /></a>
                           </td>
 
@@ -227,25 +245,30 @@
                             >
                           </td>
                         </tr>
-                        
                       </tbody>
                       <tbody>
                         <tr>
                           <td class="actions" colspan="6">
-                            <input
-                              type="button"
-                              value="Update Cart"
-                              v-on:click="updateCart()"
-                              name="update_cart"
-                              class="button add_to_cart_button"
-                            />
+                            <a
+                              class="add_to_cart_button"
+                              data-quantity="1"
+                              data-product_sku=""
+                              data-product_id="70"
+                              rel="nofollow"
+                               v-on:click="updateCart()"
+                              >Update Cart</a
+                            >
 
-                            <input
-                              type="button"
-                              value="Checkout"
-                              name="proceed"
-                              class="checkout-button add_to_cart_button button alt wc-forward"
-                            />
+                          
+                            <a
+                              class="add_to_cart_button"
+                              data-quantity="1"
+                              data-product_sku=""
+                              data-product_id="70"
+                              rel="nofollow"
+                              href="http://localhost:8080/#/check-out"
+                              >checkout</a
+                            >
                           </td>
                         </tr>
                       </tbody>
@@ -255,19 +278,33 @@
                   <div class="cart-collaterals">
                     <div class="cross-sells">
                       <h2>You may be interested in...</h2>
-                      <ul class="products" v-for="index in 2" v-bind:key="index">
+                      <ul
+                        class="products"
+                        v-for="index in 2"
+                        v-bind:key="index"
+                      >
                         <li class="product">
-                          <a target="_blank" :href="'http://localhost:8080/#/product/'+(randomProducts[index-1].id)">
+                          <a
+                            target="_blank"
+                            :href="
+                              'http://localhost:8080/#/product/' +
+                              randomProducts[index - 1].id
+                            "
+                          >
                             <img
                               width="325"
                               height="325"
                               alt="T_4_front"
                               class="attachment-shop_catalog wp-post-image"
-                              src="img/product-2.jpg"
+                              :src="randomProducts[index - 1].images"
                             />
-                            <h3>{{ randomProducts[index-1].name }} {{index}}</h3>
+                            <h3>
+                              {{ randomProducts[index - 1].name }} {{ index }}
+                            </h3>
                             <span class="price"
-                              ><span class="amount">${{ randomProducts[index-1].price }}</span></span
+                              ><span class="amount"
+                                >${{ randomProducts[index - 1].price }}</span
+                              ></span
                             >
                           </a>
                         </li>
@@ -281,7 +318,9 @@
                         <tbody>
                           <tr class="cart-subtotal">
                             <th>Cart Subtotal</th>
-                            <td><span class="amount">${{total}}</span></td>
+                            <td>
+                              <span class="amount">${{ total }}</span>
+                            </td>
                           </tr>
 
                           <tr class="shipping">
@@ -293,7 +332,9 @@
                             <th>Order Total</th>
                             <td>
                               <strong
-                                ><span class="amount">${{total}}</span></strong
+                                ><span class="amount"
+                                  >${{ total }}</span
+                                ></strong
                               >
                             </td>
                           </tr>
@@ -341,9 +382,7 @@
           <div class="row">
             <div class="col-md-8">
               <div class="copyright">
-                <p>
-                  &copy; 2022 group 3. All Rights Reserved.
-                </p>
+                <p>&copy; 2022 group 3. All Rights Reserved.</p>
               </div>
             </div>
 
@@ -375,7 +414,7 @@ import "../Shop/css/font-awesome.min.css";
 import "../Shop/css/responsive.css";
 import "../Shop/style.css";
 import "../Shop/css/owl.carousel.css";
-import store from '../../store'
+import store from "../../store";
 
 import axios from "axios";
 import { mapState } from "vuex";
@@ -404,30 +443,26 @@ export default {
       randomProducts: [],
       carts: [],
       cartsData: {
-        total:0,
+        total: 0,
         item: 0,
       },
       categories: [],
-      total:0,
-
+      total: 0,
     };
   },
-  computed: {
-  },
-  
+  computed: {},
 
   mounted() {
-    console.log(this.$route)
-    if( this.$route.params.product){
-      this.addToCart()
-    }else{
-       this.getCartItems();
-       this.getCartDatas();
+    console.log(this.$route);
+    if (this.$route.params.product) {
+      this.addToCart();
+    } else {
+      this.getCartItems();
+      this.getCartDatas();
     }
     this.getCategories();
     this.getRandomProducts();
-    
-    
+
     loadScript("https://code.jquery.com/jquery.min.js");
     loadScript(
       "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"
@@ -435,7 +470,7 @@ export default {
   },
   methods: {
     async getCartTotal() {
-      let count = 0
+      let count = 0;
       await _.map(this.carts, (cart) => {
         count += cart.quantity * cart.bouquetPrice;
       });
@@ -448,7 +483,7 @@ export default {
         )
         .then((response) => {
           this.carts = response.data;
-          this.getCartTotal()
+          this.getCartTotal();
         })
         .catch((error) => {
           console.log(error);
@@ -461,7 +496,7 @@ export default {
           `${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Carts/delete/${deletedCart.id}`
         )
         .then((res) => {
-          console.log(res)
+          console.log(res);
           if (res.status === 200) {
             alert("deleted");
             this.carts.splice(index, 1);
@@ -476,28 +511,25 @@ export default {
           _.map(response.data, (item) => {
             this.randomProducts.push(Object.assign({}, item));
           });
-           this.randomProducts= _.shuffle(this.randomProducts);
+          this.randomProducts = _.shuffle(this.randomProducts);
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    
+
     updateCart() {
       _.map(this.carts, (cart) => {
         axios
-          .put(
-            `${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Carts/update`,
-            {
-              id: cart.id,
-              quantity: cart.quantity,
-              isActive: true,
-              bouquetId: cart.bouquetId,
-              customerId: cart.customerId,
-              recipientId: cart.recipientId,
-              bouquetMessageId: cart.bouquetMessageId,
-            }
-          )
+          .put(`${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Carts/update`, {
+            id: cart.id,
+            quantity: cart.quantity,
+            isActive: true,
+            bouquetId: cart.bouquetId,
+            customerId: cart.customerId,
+            recipientId: cart.recipientId,
+            bouquetMessageId: cart.bouquetMessageId,
+          })
           .then((res) => {
             if (res.status === 200) {
               this.getCartTotal();
@@ -526,40 +558,38 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-        if(cartsDatas){
-          _.map(cartsDatas, (cart) => {
-            this.cartsData.total += cart.quantity * cart.bouquetPrice;
-          });
-          this.cartsData.item = cartsDatas.length;
-        }
-
+      if (cartsDatas) {
+        _.map(cartsDatas, (cart) => {
+          this.cartsData.total += cart.quantity * cart.bouquetPrice;
+        });
+        this.cartsData.item = cartsDatas.length;
+      }
     },
     async addToCart() {
-      console.log(this.$route.params)
+      console.log(this.$route.params);
       await axios
-        .post(
-          `${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Carts/add`,
-          {
-            quantity: this.$route.params.quantity?parseInt(this.$route.params.quantity):1,
-            bouquetId: this.$route.params.product.id,
-            customerId: 1,//de ung voi khach hang
-            recipientId: 1,//de ung voi khach hang
-            bouquetMessageId: 1,//giu nguyen
-          }
-        )
+        .post(`${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Carts/add`, {
+          quantity: this.$route.params.quantity
+            ? parseInt(this.$route.params.quantity)
+            : 1,
+          bouquetId: this.$route.params.product.id,
+          customerId: 1, //de ung voi khach hang
+          recipientId: 1, //de ung voi khach hang
+          bouquetMessageId: 1, //giu nguyen
+        })
         .then((res) => {
-          console.log(res)
-          if (res.statusText === 'Created') {
+          console.log(res);
+          if (res.statusText === "Created") {
             this.getCartItems();
             this.getCartTotal();
             this.getCartDatas();
           }
         });
-    },//toi da khoc
+    }, //toi da khoc
     //AI qua thong minh
     //doc duoc ca suy nghi a
     //10/10
-    
+
     //10/10 - lam chu cong nghe copilot - nguyen van a
   },
 };

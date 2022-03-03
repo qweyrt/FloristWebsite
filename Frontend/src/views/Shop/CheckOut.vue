@@ -1352,14 +1352,15 @@
                         </ul>
 
                         <div class="form-row place-order">
-                          <input
-                            type="button"
-                            data-value="Place order"
-                            value="Place order"
-                            id="place_order"
-                            name="checkout-button add_to_cart_button button"
-                            class="checkout-button add_to_cart_button button"
-                          />
+                           <a
+                              class="add_to_cart_button"
+                              data-quantity="1"
+                              data-product_sku=""
+                              data-product_id="70"
+                              rel="nofollow"
+                              href="http://localhost:8080/#/check-out"
+                              >Place order</a
+                            >
                         </div>
 
                         <div class="clear"></div>
