@@ -211,7 +211,7 @@ export default {
       if (this.id) {
         const item = find(
           this.customers,
-          (item) => item.id === parseInt(this.id)
+          (item) => item.id === this.id
         );
         if (item) {
           this.isProfileExists = true;
@@ -236,7 +236,7 @@ export default {
         dateOfBirth: this.form.dateOfBirth,
         gender: this.form.gender,
         address: this.form.address,
-        phoneNumber: parseInt(this.form.phoneNumber),
+        phoneNumber: this.form.phoneNumber,
       };
       var parse = JSON.stringify(customer);
       const options = {
@@ -255,7 +255,7 @@ export default {
         dateOfBirth: new Date(this.form.dateOfBirth).toISOString(),
         gender: this.form.gender,
         address: this.form.address,
-        phoneNumber: parseInt(this.form.phoneNumber),
+        phoneNumber: this.form.phoneNumber,
       };
       var parse = JSON.stringify(customer);
       const options = {

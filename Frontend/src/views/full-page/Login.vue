@@ -5,7 +5,7 @@
   >
     <router-link
       slot="button"
-      to="/"
+      to="/home"
       class="button is-small"
     >
       Dashboard
@@ -17,9 +17,9 @@
     >
       <b-field label="E-mail Address">
         <b-input
-          v-model="form.email"
-          name="email"
-          type="email"
+          v-model="form.userName"
+          name="userName"
+          type="text"
           required
         />
       </b-field>
@@ -57,7 +57,7 @@
         </div>
         <div class="control">
           <router-link
-            to="/"
+            to="/home"
             class="button is-outlined is-black"
           >
             Dashboard
@@ -70,6 +70,7 @@
 
 <script>
 import CardComponent from '@/components/CardComponent.vue'
+import axios from "axios";
 
 export default {
   name: 'Login',
@@ -78,8 +79,8 @@ export default {
     return {
       isLoading: false,
       form: {
-        email: 'john.doe@example.com',
-        password: 'my-secret-password-9e9w',
+        userName: null,
+        password: null,
         remember: false
       }
     }
@@ -87,12 +88,21 @@ export default {
   methods: {
     submit () {
       this.isLoading = true
-
+	  if(this.form.userName != null && this.form.userName != "" && this.form.password != null && this.form.password != ""){
+	  const options = {
+        headers: { "content-type": "application/json" },
+      };
+		axios
+        .post(`${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/v1/auth/login?userName=${this.form.userName}&password=${this.form.password}`, options)
+        .then((response) => {
+			localStorage.setItem('LoginData', response.data);
+        });
       setTimeout(() => {
         this.isLoading = false
 
-        this.$router.push('/')
+        this.$router.push('/home')
       }, 750)
+	  }
     }
   }
 }

@@ -61,7 +61,7 @@
       >
         <div class="buttons is-right no-wrap">
           <router-link
-            :to="{ name: 'customers.edit', params: { id: props.row.id } }"
+            :to="{ name: 'customers.edit', params: { id: props.row.id} }"
             class="button is-small is-info"
           >
             <b-icon icon="account-edit" size="is-small" />

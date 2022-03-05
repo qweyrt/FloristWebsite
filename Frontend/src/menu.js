@@ -37,6 +37,12 @@ export default [
 
 			]
 		},
+		{
+			to: '/login',
+			label: 'Login',
+			icon: 'lock'
+		}
+
 /*  {
       to: '/tables',
       label: 'Tables',

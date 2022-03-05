@@ -9,7 +9,7 @@ const store = new Vuex.Store({
 		/* User */
 		userName: null,
 		userEmail: null,
-		userAvatar: null,
+		// userAvatar: null,
 
 		/* NavBar */
 		isNavBarVisible: true,
@@ -44,9 +44,9 @@ const store = new Vuex.Store({
 			if (payload.email) {
 				state.userEmail = payload.email;
 			}
-			if (payload.avatar) {
-				state.userAvatar = payload.avatar;
-			}
+			// if (payload.avatar) {
+			// 	state.userAvatar = payload.avatar;
+			// }
 		},
 
 		/* Aside Mobile */
