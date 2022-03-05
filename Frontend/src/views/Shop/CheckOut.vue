@@ -55,18 +55,31 @@
               <div class="user-menu">
                 <ul>
                   <li>
-                    <a href="#"><i class="fa fa-user"></i> My Account</a>
-                  </li>
-                  <li>
-                    <a target="_blank" href="http://localhost:8080/#/cart-check"><i class="fa fa-user"></i> My Cart</a>
+                    <a target="_blank" href="http://localhost:8080/#/cart-check"
+                      ><i class="fa fa-user"></i> My Cart</a
+                    >
                   </li>
                   <li>
                     <a target="_blank" href="http://localhost:8080/#/check-out"
                       ><i class="fa fa-user"></i> Checkout</a
                     >
                   </li>
-                  <li>
-                    <a href="#"><i class="fa fa-user"></i> Login</a>
+                  <li v-if="userData.id">Hello {{ userData.userName }}</li>
+                  <li v-else>
+                    <a target="_blank" href="http://localhost:8080/#/login"
+                      ><i class="fa fa-user"></i> Login</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="user-menu">
+                <ul>
+                  <li v-if="userData.id">
+                    <a target="_blank" href="http://localhost:8080/#/login"
+                      ><i class="fa fa-user"></i> Log out</a
+                    >
                   </li>
                 </ul>
               </div>
@@ -82,12 +95,12 @@
             <div class="col-sm-6">
               <div class="logo">
                 <h1>
-                  <a href="./"><img src="img/logo.png" /></a>
+                  <a target="_blank" href="http://localhost:8080/#/shop"
+                    ><img src="../Shop/img/banner.png" width="100" height="100"
+                  /></a>
                 </h1>
               </div>
             </div>
-
-            
           </div>
         </div>
       </div>
@@ -1352,15 +1365,15 @@
                         </ul>
 
                         <div class="form-row place-order">
-                           <a
-                              class="add_to_cart_button"
-                              data-quantity="1"
-                              data-product_sku=""
-                              data-product_id="70"
-                              rel="nofollow"
-                              href="http://localhost:8080/#/check-out"
-                              >Place order</a
-                            >
+                          <a
+                            class="add_to_cart_button"
+                            data-quantity="1"
+                            data-product_sku=""
+                            data-product_id="70"
+                            rel="nofollow"
+                            href="http://localhost:8080/#/check-out"
+                            >Place order</a
+                          >
                         </div>
 
                         <div class="clear"></div>
@@ -1401,10 +1414,7 @@
           <div class="row">
             <div class="col-md-8">
               <div class="copyright">
-                <p>
-                  &copy; 2022 Group 3. All Rights Reserved.
-                  
-                </p>
+                <p>&copy; 2022 Group 3. All Rights Reserved.</p>
               </div>
             </div>
 
@@ -1456,6 +1466,7 @@ export default {
   data() {
     return {
       product: {},
+      userData: {},
       relatedProducts: [],
       randomProducts: [],
       carts: [],
@@ -1463,8 +1474,7 @@ export default {
       total: 0,
     };
   },
-  computed: {
-  },
+  computed: {},
 
   mounted() {
     this.getCartItems();
@@ -1476,23 +1486,42 @@ export default {
     );
   },
   methods: {
+    async getCartItems() {
+      const userId = localStorage.getItem("LoginData");
+      if (userId) {
+        await axios
+          .get(
+            `${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/cart-by-customer/${userId}`
+          )
+          .then((response) => {
+            this.carts = response.data;
+            this.getCartTotal();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    },
     async getCartTotal() {
       await _.map(this.carts, (cart) => {
         this.total += cart.quantity * cart.bouquetPrice;
       });
     },
     async getCartItems() {
-      await axios
-        .get(
-          `${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/cart-by-customer/1`
-        )
-        .then((response) => {
-          this.carts = response.data;
-          this.getCartTotal();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      const userId = localStorage.getItem("LoginData");
+      if (userId) {
+        await axios
+          .get(
+            `${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/cart-by-customer/1`
+          )
+          .then((response) => {
+            this.carts = response.data;
+            this.getCartTotal();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     },
     async deleteCartItem(index) {
       const deletedCart = this.carts[index];
@@ -1502,16 +1531,17 @@ export default {
         )
         .then((res) => {
           if (res.status === 200) {
-            alert("deleted");
+            this.$buefy.snackbar.open({
+              message: "deleted",
+              queue: false,
+            });
             this.carts.splice(index, 1);
           }
         });
     },
     async getRandomProducts() {
       await axios
-        .get(
-          `${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Bouquets`
-        )
+        .get(`${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Bouquets`)
         .then((response) => {
           _.map(response.data, (item) => {
             this.randomProducts.push(Object.assign({}, item));
@@ -1527,31 +1557,29 @@ export default {
     updateCart() {
       _.map(this.carts, (cart) => {
         axios
-          .put(
-            `${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Carts/update`,
-            {
-              id: cart.id,
-              quantity: cart.quantity,
-              isActive: true,
-              bouquetId: cart.bouquetId,
-              customerId: cart.customerId,
-              recipientId: cart.recipientId,
-              bouquetMessageId: cart.bouquetMessageId,
-            }
-          )
+          .put(`${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Carts/update`, {
+            id: cart.id,
+            quantity: cart.quantity,
+            isActive: true,
+            bouquetId: cart.bouquetId,
+            customerId: cart.customerId,
+            recipientId: cart.recipientId,
+            bouquetMessageId: cart.bouquetMessageId,
+          })
           .then((res) => {
             if (res.status === 200) {
               this.getCartTotal();
-              alert("updated");
+              this.$buefy.snackbar.open({
+              message: "updated",
+              queue: false,
+            });
             }
           });
       });
     },
     async getCategories() {
       await axios
-        .get(
-          `${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/categories`
-        )
+        .get(`${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/categories`)
         .then((res) => {
           this.categories = res.data;
         });

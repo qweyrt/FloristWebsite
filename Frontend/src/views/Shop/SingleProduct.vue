@@ -55,24 +55,36 @@
               <div class="user-menu">
                 <ul>
                   <li>
-                    <a href="#"><i class="fa fa-user"></i> My Account</a>
-                  </li>
-                  <li>
-                    <a target="_blank" href="http://localhost:8080/#/cart-check"><i class="fa fa-user"></i> My Cart</a>
+                    <a target="_blank" href="http://localhost:8080/#/cart-check"
+                      ><i class="fa fa-user"></i> My Cart</a
+                    >
                   </li>
                   <li>
                     <a target="_blank" href="http://localhost:8080/#/check-out"
                       ><i class="fa fa-user"></i> Checkout</a
                     >
                   </li>
-                  <li>
-                    <a href="#"><i class="fa fa-user"></i> Login</a>
+                  <li v-if="userData.id">Hello {{ userData.userName }}</li>
+                  <li v-else>
+                    <a target="_blank" href="http://localhost:8080/#/login"
+                      ><i class="fa fa-user"></i> Login</a
+                    >
                   </li>
                 </ul>
               </div>
             </div>
 
-            <div class="col-md-4"></div>
+            <div class="col-md-4">
+              <div class="user-menu">
+                <ul>
+                  <li v-if="userData.id">
+                    <a target="_blank" href="http://localhost:8080/#/login"
+                      ><i class="fa fa-user"></i> Log out</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -84,7 +96,9 @@
             <div class="col-sm-6">
               <div class="logo">
                 <h1>
-                  <a href="./"><img src="img/logo.png" /></a>
+                  <a target="_blank" href="http://localhost:8080/#/shop"
+                    ><img src="../Shop/img/banner.png" width="100" height="100"
+                  /></a>
                 </h1>
               </div>
             </div>
@@ -92,9 +106,9 @@
             <div class="col-sm-6">
               <div class="shopping-item">
                 <a target="_blank" href="http://localhost:8080/#/cart-check"
-                  >Cart - <span class="cart-amunt">${{cartsData.total}}</span>
+                  >Cart - <span class="cart-amunt">${{ cartsData.total }}</span>
                   <i class="fa fa-shopping-cart"></i>
-                  <span class="product-count">{{cartsData.item}}</span></a
+                  <span class="product-count">{{ cartsData.item }}</span></a
                 >
               </div>
             </div>
@@ -120,16 +134,36 @@
               </button>
             </div>
             <div class="navbar-collapse collapse">
-             <ul class="nav navbar-nav" >
-                <li><a target="_blank" href="http://localhost:8080/#/shop">Home</a></li>
-
+              <ul class="nav navbar-nav">
+                <li>
+                  <a target="_blank" href="http://localhost:8080/#/shop"
+                    >Home</a
+                  >
+                </li>
               </ul>
-              
-              <ul class="nav navbar-nav" v-for="(category) in categories" v-bind:key="category.id">
-                
-                <li v-if="category.name === product.categoryName"  class="active"><a target="_blank" :href="'http://localhost:8080/#/products/'+category.name">{{category.name}}</a></li>
-                <li v-else ><a target="_blank" :href="'http://localhost:8080/#/products/'+category.name">{{category.name}}</a></li>
 
+              <ul
+                class="nav navbar-nav"
+                v-for="category in categories"
+                v-bind:key="category.id"
+              >
+                <li
+                  v-if="category.name === product.categoryName"
+                  class="active"
+                >
+                  <a
+                    target="_blank"
+                    :href="'http://localhost:8080/#/products/' + category.name"
+                    >{{ category.name }}</a
+                  >
+                </li>
+                <li v-else>
+                  <a
+                    target="_blank"
+                    :href="'http://localhost:8080/#/products/' + category.name"
+                    >{{ category.name }}</a
+                  >
+                </li>
               </ul>
             </div>
           </div>
@@ -156,27 +190,47 @@
             <div class="col-md-4">
               <!-- lấy category (chờ db) -->
               <div class="single-sidebar">
-                <h2 class="sidebar-title" >Products</h2>
-                <div class="thubmnail-recent" v-for="index in 3" v-bind:key="index">
+                <h2 class="sidebar-title">Products</h2>
+                <div
+                  class="thubmnail-recent"
+                  v-for="index in 3"
+                  v-bind:key="index"
+                >
                   <img
-                    :src="randomProducts[index-1].images"
+                    :src="randomProducts[index - 1].images"
                     class="recent-thumb"
                     alt=""
                   />
-                  <h2><a target="_blank" :href="'http://localhost:8080/#/product/'+(randomProducts[index-1].id)">{{ randomProducts[index-1].name }}</a></h2>
+                  <h2>
+                    <a
+                      target="_blank"
+                      :href="
+                        'http://localhost:8080/#/product/' +
+                        randomProducts[index - 1].id
+                      "
+                      >{{ randomProducts[index - 1].name }}</a
+                    >
+                  </h2>
                   <div class="product-sidebar-price">
-                    <ins>${{ randomProducts[index-1].price }}</ins> 
+                    <ins>${{ randomProducts[index - 1].price }}</ins>
                   </div>
                 </div>
-                
               </div>
             </div>
 
             <div class="col-md-8">
               <div class="product-content-right">
                 <div class="product-breadcroumb">
-                  <a target="_blank" href="http://localhost:8080/#/shop">Home</a>
-                  <a target="_blank" :href="'http://localhost:8080/#/products/'+product.categoryName">{{ product.categoryName }}</a>
+                  <a target="_blank" href="http://localhost:8080/#/shop"
+                    >Home</a
+                  >
+                  <a
+                    target="_blank"
+                    :href="
+                      'http://localhost:8080/#/products/' + product.categoryName
+                    "
+                    >{{ product.categoryName }}</a
+                  >
                   <a href="#">{{ product.name }}</a>
                 </div>
 
@@ -216,13 +270,26 @@
                             step="1"
                           />
                         </div>
-                        <button class="add_to_cart_button" v-on:click="addToCart(product,quantity)" type="submit">
+                        <button
+                          class="add_to_cart_button"
+                          v-on:click="addToCart(product, quantity)"
+                          type="submit"
+                        >
                           Add to cart
                         </button>
                       </form>
 
                       <div class="product-inner-category">
-                        <p>Category: <a :href="'http://localhost:8080/#/products/'+product.categoryName">{{ product.categoryName }}</a>.</p>
+                        <p>
+                          Category:
+                          <a
+                            :href="
+                              'http://localhost:8080/#/products/' +
+                              product.categoryName
+                            "
+                            >{{ product.categoryName }}</a
+                          >.
+                        </p>
                       </div>
 
                       <div role="tabpanel">
@@ -236,7 +303,6 @@
                               >Description</a
                             >
                           </li>
-                          
                         </ul>
                         <div class="tab-content">
                           <div
@@ -247,7 +313,6 @@
                             <h2>Product Description</h2>
                             <p>{{ product.description }}</p>
                           </div>
-                          
                         </div>
                       </div>
                     </div>
@@ -265,10 +330,17 @@
                         <img :src="relatedProduct.images" alt="" />
                       </div>
                       <h2>
-                        <a target="_blank" :href="'http://localhost:8080/#/product/'+(relatedProduct.id)">{{ relatedProduct.name }}</a>
+                        <a
+                          target="_blank"
+                          :href="
+                            'http://localhost:8080/#/product/' +
+                            relatedProduct.id
+                          "
+                          >{{ relatedProduct.name }}</a
+                        >
                       </h2>
                       <div class="product-carousel-price">
-                        <ins>${{ relatedProduct.price }}</ins> 
+                        <ins>${{ relatedProduct.price }}</ins>
                       </div>
                     </swiper-slide>
                     <div class="swiper-pagination" slot="pagination"></div>
@@ -300,9 +372,7 @@
               </div>
             </div>
 
-            <div class="col-md-3 col-sm-6">
-             
-            </div>
+            <div class="col-md-3 col-sm-6"></div>
 
             <div class="col-md-3 col-sm-6"></div>
           </div>
@@ -373,11 +443,12 @@ export default {
       relatedProducts: [],
       randomProducts: [],
       categories: [],
+      userData: {},
       cartsData: {
-        total:0,
+        total: 0,
         item: 0,
       },
-      quantity:1,
+      quantity: 1,
       swiperOptions1: {
         slidesPerView: 5,
         spaceBetween: 30,
@@ -401,6 +472,7 @@ export default {
     this.getRandomProducts();
     this.getCategories();
     this.getCartDatas();
+    this.getCurrentUser();
     loadScript("https://code.jquery.com/jquery.min.js");
     loadScript(
       "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"
@@ -418,7 +490,9 @@ export default {
   methods: {
     async getProduct() {
       await axios
-        .get(`${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Bouquets/${this.$route.params.id}`)
+        .get(
+          `${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Bouquets/${this.$route.params.id}`
+        )
         .then((response) => {
           this.product = response.data;
         })
@@ -433,12 +507,24 @@ export default {
           _.map(response.data, (item) => {
             this.randomProducts.push(Object.assign({}, item));
           });
-           this.randomProducts= _.shuffle(this.randomProducts);
-          console.log(this.randomProducts)
+          this.randomProducts = _.shuffle(this.randomProducts);
+          console.log(this.randomProducts);
         })
         .catch((error) => {
           console.log(error);
         });
+    },
+    async getCurrentUser() {
+      const userId = localStorage.getItem("LoginData");
+      if (userId) {
+        await axios
+          .get(
+            `${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Customers/${userId}`
+          )
+          .then((res) => {
+            this.userData = res.data;
+          });
+      }
     },
     async getRelatedProducts(product) {
       await axios
@@ -447,7 +533,7 @@ export default {
         )
         .then((response) => {
           _.map(response.data, (item) => {
-            console.log(item)
+            console.log(item);
             this.relatedProducts.push(Object.assign({}, item));
           });
         })
@@ -455,34 +541,50 @@ export default {
           console.log(error);
         });
     },
-    async getCategories(){
-      await axios.get(`${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/categories`).then((res) => {
-        this.categories = res.data;
-      });
+    async getCategories() {
+      await axios
+        .get(`${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/categories`)
+        .then((res) => {
+          this.categories = res.data;
+        });
     },
     async getCartDatas() {
       let cartsDatas = [];
-      await axios
-        .get(
-          `${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/cart-by-customer/1`
-        )
-        .then((response) => {
-          cartsDatas = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-        if(cartsDatas){
-          _.map(cartsDatas, (cart) => {
-            this.cartsData.total += cart.quantity * cart.bouquetPrice;
+      const userId = localStorage.getItem("LoginData");
+      if (userId) {
+        await axios
+          .get(
+            `${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/cart-by-customer/${userId}`
+          )
+          .then((response) => {
+            cartsDatas = response.data;
+          })
+          .catch((error) => {
+            console.log(error);
           });
-          this.cartsData.item = cartsDatas.length;
-        }
+      }
 
+      if (cartsDatas) {
+        _.map(cartsDatas, (cart) => {
+          this.cartsData.total += cart.quantity * cart.bouquetPrice;
+        });
+        this.cartsData.item = cartsDatas.length;
+      }
     },
-    addToCart(product,quantity){
-      this.$router.push({ path: '/cart-check', name:'Cart', params: {product,quantity }   })
-    }
+    addToCart(product, quantity) {
+      if (this.userData.id) {
+        this.$router.push({
+          path: "/cart-check",
+          name: "Cart",
+          params: { product, quantity },
+        });
+      } else {
+        this.$buefy.snackbar.open({
+          message: "Please login to add to cart",
+          queue: false,
+        });
+      }
+    },
   },
 };
 </script>

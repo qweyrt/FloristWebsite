@@ -55,25 +55,35 @@
               <div class="user-menu">
                 <ul>
                   <li>
-                    <a href="#"><i class="fa fa-user"></i> My Account</a>
-                  </li>
-                  <li>
-                    <a target="_blank" href="http://localhost:8080/#/cart-check"><i class="fa fa-user"></i> My Cart</a>
+                    <a target="_blank" href="http://localhost:8080/#/cart-check"
+                      ><i class="fa fa-user"></i> My Cart</a
+                    >
                   </li>
                   <li>
                     <a target="_blank" href="http://localhost:8080/#/check-out"
                       ><i class="fa fa-user"></i> Checkout</a
                     >
                   </li>
-                  <li>
-                    <a href="#"><i class="fa fa-user"></i> Login</a>
+                  <li v-if="userData.id">Hello {{ userData.userName }}</li>
+                  <li v-else>
+                    <a target="_blank" href="http://localhost:8080/#/login"
+                      ><i class="fa fa-user"></i> Login</a
+                    >
                   </li>
                 </ul>
               </div>
             </div>
 
             <div class="col-md-4">
-              
+              <div class="user-menu">
+                <ul>
+                  <li v-if="userData.id">
+                    <a target="_blank" href="http://localhost:8080/#/login"
+                      ><i class="fa fa-user"></i> Log out</a
+                    >
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
@@ -86,7 +96,9 @@
             <div class="col-sm-6">
               <div class="logo">
                 <h1>
-                  <a href="./"><img src="img/logo.png" /></a>
+                  <a target="_blank" href="http://localhost:8080/#/shop"
+                    ><img src="../Shop/img/banner.png" width="100" height="100"
+                  /></a>
                 </h1>
               </div>
             </div>
@@ -94,9 +106,9 @@
             <div class="col-sm-6">
               <div class="shopping-item">
                 <a target="_blank" href="http://localhost:8080/#/cart-check"
-                  >Cart - <span class="cart-amunt">${{cartsData.total}}</span>
+                  >Cart - <span class="cart-amunt">${{ cartsData.total }}</span>
                   <i class="fa fa-shopping-cart"></i>
-                  <span class="product-count">{{cartsData.item}}</span></a
+                  <span class="product-count">{{ cartsData.item }}</span></a
                 >
               </div>
             </div>
@@ -122,16 +134,33 @@
               </button>
             </div>
             <div class="navbar-collapse collapse">
-              <ul class="nav navbar-nav" >
-                <li><a target="_blank" href="http://localhost:8080/#/shop">Home</a></li>
-
+              <ul class="nav navbar-nav">
+                <li>
+                  <a target="_blank" href="http://localhost:8080/#/shop"
+                    >Home</a
+                  >
+                </li>
               </ul>
-              
-              <ul class="nav navbar-nav" v-for="(category) in categories" v-bind:key="category.id">
-                
-                <li v-if="category.name === routeName"  class="active"><a target="_blank" :href="'http://localhost:8080/#/products/'+category.name">{{category.name}}</a></li>
-                <li v-else ><a target="_blank" :href="'http://localhost:8080/#/products/'+category.name">{{category.name}}</a></li>
 
+              <ul
+                class="nav navbar-nav"
+                v-for="category in categories"
+                v-bind:key="category.id"
+              >
+                <li v-if="category.name === routeName" class="active">
+                  <a
+                    target="_blank"
+                    :href="'http://localhost:8080/#/products/' + category.name"
+                    >{{ category.name }}</a
+                  >
+                </li>
+                <li v-else>
+                  <a
+                    target="_blank"
+                    :href="'http://localhost:8080/#/products/' + category.name"
+                    >{{ category.name }}</a
+                  >
+                </li>
               </ul>
             </div>
           </div>
@@ -144,7 +173,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="product-bit-title text-center">
-                <h2>{{catName}}</h2>
+                <h2>{{ catName }}</h2>
               </div>
             </div>
           </div>
@@ -154,15 +183,23 @@
       <div class="single-product-area">
         <div class="zigzag-bottom"></div>
         <div class="container">
-          <div class="row" >
-            <div class="col-md-3 col-sm-6" v-for="(product,index) in products" v-bind:key="product.id">
+          <div class="row">
+            <div
+              class="col-md-3 col-sm-6"
+              v-for="(product, index) in products"
+              v-bind:key="product.id"
+            >
               <div class="single-shop-product">
                 <div class="product-upper">
                   <img :src="product.images" alt="" />
                 </div>
-                <h2><a :href="'http://localhost:8080/#/product/'+(index+1)">{{ product.name }}</a></h2>
+                <h2>
+                  <a :href="'http://localhost:8080/#/product/' + (index + 1)">{{
+                    product.name
+                  }}</a>
+                </h2>
                 <div class="product-carousel-price">
-                  <ins>${{ product.price }}</ins> 
+                  <ins>${{ product.price }}</ins>
                 </div>
 
                 <div class="product-option-shop">
@@ -172,14 +209,13 @@
                     data-product_sku=""
                     data-product_id="70"
                     rel="nofollow"
-                    v-on:click="addToCart(product)"
+                    v-on:click="addToCart(product, 1)"
                     >Add to cart</a
                   >
                 </div>
               </div>
             </div>
           </div>
-
         </div>
       </div>
 
@@ -189,9 +225,7 @@
           <div class="row">
             <div class="col-md-3 col-sm-6">
               <div class="footer-about-us">
-                <h2>u<span>Stora</span></h2>
-
-                
+                <h2>Group <span>3</span></h2>
               </div>
             </div>
 
@@ -204,8 +238,6 @@
                 </ul>
               </div>
             </div>
-
-            
           </div>
         </div>
       </div>
@@ -214,10 +246,7 @@
           <div class="row">
             <div class="col-md-8">
               <div class="copyright">
-                <p>
-                  &copy; 2022 Group 3. All Rights Reserved.
-                  
-                </p>
+                <p>&copy; 2022 Group 3. All Rights Reserved.</p>
               </div>
             </div>
 
@@ -256,12 +285,8 @@ import "swiper/css/swiper.css";
 import { loadScript } from "vue-plugin-load-script";
 export default {
   name: "Shop",
-  components: {
-   
-  },
-  directives: {
-   
-  },
+  components: {},
+  directives: {},
   created() {
     this.$store.dispatch("toggleFullPage", true);
   },
@@ -272,10 +297,11 @@ export default {
     return {
       products: [],
       categories: [],
-      catName: '',
-      routeName: '',
+      catName: "",
+      routeName: "",
+      userData: {},
       cartsData: {
-        total:0,
+        total: 0,
         item: 0,
       },
     };
@@ -289,6 +315,7 @@ export default {
   mounted() {
     this.listProductsByCategory();
     this.getCartDatas();
+    this.getCurrentUser();
     loadScript("https://code.jquery.com/jquery.min.js");
     loadScript(
       "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"
@@ -296,53 +323,84 @@ export default {
     this.swiper.slideTo(3, 1000, false);
   },
   methods: {
+    async getCurrentUser() {
+      const userId = localStorage.getItem("LoginData");
+      if (userId) {
+        await axios
+          .get(
+            `${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Customers/${userId}`
+          )
+          .then((res) => {
+            this.userData = res.data;
+          });
+      }
+    },
     async listProductsByCategory() {
-      this.routeName = this.$route.params.category
-      let id = 0
-      await axios.get(`${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/categories`).then((res) => {
-        this.categories = res.data;
-      });
-      _.map(this.categories, (category) =>{
-        if(category.name === this.$route.params.category){
+      this.routeName = this.$route.params.category;
+      let id = 0;
+      await axios
+        .get(`${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/categories`)
+        .then((res) => {
+          this.categories = res.data;
+        });
+      _.map(this.categories, (category) => {
+        if (category.name === this.$route.params.category) {
           id = category.id;
           this.catName = category.name;
         }
-      })
-      console.log(id)
+      });
+      console.log(id);
       //khong chac chan
       await axios
-        .get(`${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/bouquets-by-categories/${id}`)
+        .get(
+          `${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/bouquets-by-categories/${id}`
+        )
         .then((response) => {
-          console.log(response.data)
+          console.log(response.data);
           _.map(response.data, (item) => {
             this.products.push(Object.assign({}, item));
           });
           console.log(this.products);
         });
     },
-     async getCartDatas() {
+    async getCartDatas() {
       let cartsDatas = [];
-      await axios
-        .get(
-          `${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/cart-by-customer/1`
-        )
-        .then((response) => {
-          cartsDatas = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-        if(cartsDatas){
-          _.map(cartsDatas, (cart) => {
-            this.cartsData.total += cart.quantity * cart.bouquetPrice;
+      const userId = localStorage.getItem("LoginData");
+      if (userId) {
+        await axios
+          .get(
+            `${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/cart-by-customer/${userId}`
+          )
+          .then((response) => {
+            cartsDatas = response.data;
+          })
+          .catch((error) => {
+            console.log(error);
           });
-          this.cartsData.item = cartsDatas.length;
-        }
+      }
 
+      if (cartsDatas) {
+        _.map(cartsDatas, (cart) => {
+          this.cartsData.total += cart.quantity * cart.bouquetPrice;
+        });
+        this.cartsData.item = cartsDatas.length;
+      }
     },
-    addToCart(product,quantity){
-      this.$router.push({ path: '/cart-check', name:'Cart', params: {product,quantity }   })
-    }
+    addToCart(product, quantity) {
+      console.log(product);
+      if (this.userData.id) {
+        this.$router.push({
+          path: "/cart-check",
+          name: "Cart",
+          params: { product, quantity },
+        });
+      } else {
+        this.$buefy.snackbar.open({
+          message: "Please login to add to cart",
+          queue: false,
+        });
+      }
+    },
   },
 };
 </script>

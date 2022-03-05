@@ -33,9 +33,6 @@
                 <div class="user-menu">
                   <ul>
                     <li>
-                      <a href="#"><i class="fa fa-user"></i> My Account</a>
-                    </li>
-                    <li>
                       <a
                         target="_blank"
                         href="http://localhost:8080/#/cart-check"
@@ -49,14 +46,27 @@
                         ><i class="fa fa-user"></i> Checkout</a
                       >
                     </li>
-                    <li>
-                      <a href="#"><i class="fa fa-user"></i> Login</a>
+                    <li v-if="userData.id">Hello {{ userData.userName }}</li>
+                    <li v-else>
+                      <a target="_blank" href="http://localhost:8080/#/login"
+                        ><i class="fa fa-user"></i> Login</a
+                      >
                     </li>
                   </ul>
                 </div>
               </div>
 
-              <div class="col-md-4"></div>
+              <div class="col-md-4">
+                <div class="user-menu">
+                  <ul>
+                    <li v-if="userData.id">
+                      <a target="_blank" href="http://localhost:8080/#/login"
+                        ><i class="fa fa-user"></i> Log out</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -68,7 +78,7 @@
               <div class="col-sm-6">
                 <div class="logo">
                   <h1>
-                    <a href="./"><img src="../Shop/img/logo.png" /></a>
+                     <a target="_blank" href="http://localhost:8080/#/shop"><img src="../Shop/img/banner.png" width="100" height="100" /></a>
                   </h1>
                 </div>
               </div>
@@ -139,7 +149,7 @@
             <img src="../Shop/img/home-12.jpeg" alt="Slide" />
             <div class="caption-group">
               <h2 class="caption title">
-                 <span class="primary"> <strong>Birthday Blooms</strong></span>
+                <span class="primary"> <strong>Birthday Blooms</strong></span>
               </h2>
               <a class="caption button-radius" href="#"
                 ><span class="icon"></span>Shop All Birthday Flowers & Gifts</a
@@ -150,7 +160,7 @@
             <img src="../Shop/img/home-24.jpeg" alt="Slide" />
             <div class="caption-group">
               <h2 class="caption title">
-                 <span class="primary"> <strong>Need It Today?</strong></span>
+                <span class="primary"> <strong>Need It Today?</strong></span>
               </h2>
               <a class="caption button-radius" href="#"
                 ><span class="icon"></span>Shop All Same Day Flowers</a
@@ -161,7 +171,7 @@
             <img src="../Shop/img/home-29.jpeg" alt="Slide" />
             <div class="caption-group">
               <h2 class="caption title">
-                 <span class="primary"> <strong>Say I Love You</strong></span>
+                <span class="primary"> <strong>Say I Love You</strong></span>
               </h2>
               <a class="caption button-radius" href="#"
                 ><span class="icon"></span>Shop Love & Romance</a
@@ -172,7 +182,7 @@
             <img src="../Shop/img/home-31.jpeg" alt="Slide" />
             <div class="caption-group">
               <h2 class="caption title">
-                 <span class="primary"> <strong>Send Your Love</strong></span>
+                <span class="primary"> <strong>Send Your Love</strong></span>
               </h2>
               <a class="caption button-radius" href="#"
                 ><span class="icon"></span>Shop now</a
@@ -470,6 +480,7 @@ export default {
         total: 0,
         item: 0,
       },
+      userData: {},
       swiperOptions1: {
         slidesPerView: 5,
         spaceBetween: 30,
@@ -509,6 +520,7 @@ export default {
     this.getCategories();
     this.getRelatedProducts();
     this.getCartDatas();
+    this.getCurrentUser();
     loadScript("https://code.jquery.com/jquery.min.js");
     loadScript(
       "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"
@@ -523,7 +535,7 @@ export default {
           _.map(response.data, (item) => {
             this.products.push(Object.assign({}, item));
           });
-          _.shuffle(this.products)
+          _.shuffle(this.products);
         });
     },
     async getCategories() {
@@ -532,6 +544,18 @@ export default {
         .then((res) => {
           this.categories = res.data;
         });
+    },
+    async getCurrentUser() {
+      const userId = localStorage.getItem("LoginData");
+      if (userId) {
+        await axios
+          .get(
+            `${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Customers/${userId}`
+          )
+          .then((res) => {
+            this.userData = res.data;
+          });
+      }
     },
     async getRelatedProducts() {
       await axios
@@ -574,17 +598,20 @@ export default {
     },
     async getCartDatas() {
       let cartsDatas = [];
-      await axios
-        .get(
-          `${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/cart-by-customer/1`
-        )
-        .then((response) => {
-          cartsDatas = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-      console.log(cartsDatas);
+      const userId = localStorage.getItem("LoginData");
+      if (userId) {
+        await axios
+          .get(
+            `${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/cart-by-customer/${userId}`
+          )
+          .then((response) => {
+            cartsDatas = response.data;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+
       if (cartsDatas) {
         _.map(cartsDatas, (cart) => {
           this.cartsData.total += cart.quantity * cart.bouquetPrice;

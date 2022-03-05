@@ -42,9 +42,6 @@
               <div class="user-menu">
                 <ul>
                   <li>
-                    <a href="#"><i class="fa fa-user"></i> My Account</a>
-                  </li>
-                  <li>
                     <a target="_blank" href="http://localhost:8080/#/cart-check"
                       ><i class="fa fa-user"></i> My Cart</a
                     >
@@ -54,14 +51,27 @@
                       ><i class="fa fa-user"></i> Checkout</a
                     >
                   </li>
-                  <li>
-                    <a href="#"><i class="fa fa-user"></i> Login</a>
+                  <li v-if="userData.id">Hello {{ userData.userName }}</li>
+                  <li v-else>
+                    <a target="_blank" href="http://localhost:8080/#/login"
+                      ><i class="fa fa-user"></i> Login</a
+                    >
                   </li>
                 </ul>
               </div>
             </div>
 
-            <div class="col-md-4"></div>
+            <div class="col-md-4">
+              <div class="user-menu">
+                <ul>
+                  <li v-if="userData.id">
+                    <a target="_blank" v-on:click="logout()"
+                      ><i class="fa fa-user"></i> Log out</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -73,7 +83,9 @@
             <div class="col-sm-6">
               <div class="logo">
                 <h1>
-                  <a href="./"><img src="img/logo.png" /></a>
+                  <a target="_blank" href="http://localhost:8080/#/shop"
+                    ><img src="../Shop/img/banner.png" width="100" height="100"
+                  /></a>
                 </h1>
               </div>
             </div>
@@ -255,11 +267,10 @@
                               data-product_sku=""
                               data-product_id="70"
                               rel="nofollow"
-                               v-on:click="updateCart()"
+                              v-on:click="updateCart()"
                               >Update Cart</a
                             >
 
-                          
                             <a
                               class="add_to_cart_button"
                               data-quantity="1"
@@ -439,6 +450,7 @@ export default {
   data() {
     return {
       product: {},
+      userData: {},
       relatedProducts: [],
       randomProducts: [],
       carts: [],
@@ -454,6 +466,7 @@ export default {
 
   mounted() {
     console.log(this.$route);
+    this.getCurrentUser();
     if (this.$route.params.product) {
       this.addToCart();
     } else {
@@ -477,17 +490,20 @@ export default {
       this.total = count;
     },
     async getCartItems() {
-      await axios
-        .get(
-          `${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/cart-by-customer/1`
-        )
-        .then((response) => {
-          this.carts = response.data;
-          this.getCartTotal();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      const userId = localStorage.getItem("LoginData");
+      if (userId) {
+        await axios
+          .get(
+            `${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/cart-by-customer/${userId}`
+          )
+          .then((response) => {
+            this.carts = response.data;
+            this.getCartTotal();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     },
     async deleteCartItem(index) {
       const deletedCart = this.carts[index];
@@ -498,7 +514,10 @@ export default {
         .then((res) => {
           console.log(res);
           if (res.status === 200) {
-            alert("deleted");
+           this.$buefy.snackbar.open({
+                message: "deleted",
+                queue: false,
+              });
             this.carts.splice(index, 1);
             this.getCartTotal();
           }
@@ -534,7 +553,10 @@ export default {
             if (res.status === 200) {
               this.getCartTotal();
               this.getCartDatas();
-              alert("updated");
+              this.$buefy.snackbar.open({
+                message: "updated",
+                queue: false,
+              });
             }
           });
       });
@@ -548,16 +570,20 @@ export default {
     },
     async getCartDatas() {
       let cartsDatas = [];
-      await axios
-        .get(
-          `${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/cart-by-customer/1`
-        )
-        .then((response) => {
-          cartsDatas = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      const userId = localStorage.getItem("LoginData");
+      if (userId) {
+        await axios
+          .get(
+            `${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Data/cart-by-customer/${userId}`
+          )
+          .then((response) => {
+            cartsDatas = response.data;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+
       if (cartsDatas) {
         _.map(cartsDatas, (cart) => {
           this.cartsData.total += cart.quantity * cart.bouquetPrice;
@@ -565,18 +591,43 @@ export default {
         this.cartsData.item = cartsDatas.length;
       }
     },
-    async addToCart() {
+    async getCurrentUser() {
+      const userId = localStorage.getItem("LoginData");
+      if (userId) {
+        await axios
+          .get(
+            `${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Customers/${userId}`
+          )
+          .then((res) => {
+            this.userData = res.data;
+          });
+      }
+    },
+    logout() {
+      localStorage.removeItem("LoginData");
+      this.$router.push("/shop");
+      this.$buefy.snackbar.open({
+        message: "Logged out!",
+        queue: false,
+      });
+    },
+     addToCart() {
+      const userId = localStorage.getItem("LoginData");
       console.log(this.$route.params);
-      await axios
-        .post(`${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Carts/add`, {
-          quantity: this.$route.params.quantity
-            ? parseInt(this.$route.params.quantity)
-            : 1,
+      console.log("a");
+      const options = {
+        headers: { "content-type": "application/json" },
+      };
+      const cart={
+        quantity: parseInt(this.$route.params.quantity),
           bouquetId: this.$route.params.product.id,
-          customerId: 1, //de ung voi khach hang
+          customerId: 2, //de ung voi khach hang
           recipientId: 1, //de ung voi khach hang
           bouquetMessageId: 1, //giu nguyen
-        })
+      }
+      var parse = JSON.stringify(cart);
+       axios
+        .post(`https://localhost:5001/api/Carts/add`,parse ,options)
         .then((res) => {
           console.log(res);
           if (res.statusText === "Created") {
@@ -584,7 +635,8 @@ export default {
             this.getCartTotal();
             this.getCartDatas();
           }
-        });
+        })
+        .catch((err) => console.log(err));
     }, //toi da khoc
     //AI qua thong minh
     //doc duoc ca suy nghi a
