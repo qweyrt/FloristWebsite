@@ -514,11 +514,12 @@ export default {
         .then((res) => {
           console.log(res);
           if (res.status === 200) {
-           this.$buefy.snackbar.open({
-                message: "deleted",
-                queue: false,
-              });
+            this.$buefy.snackbar.open({
+              message: "deleted",
+              queue: false,
+            });
             this.carts.splice(index, 1);
+            this.getCartDatas();
             this.getCartTotal();
           }
         });
@@ -570,6 +571,7 @@ export default {
     },
     async getCartDatas() {
       let cartsDatas = [];
+      let total = 0;
       const userId = localStorage.getItem("LoginData");
       if (userId) {
         await axios
@@ -586,8 +588,9 @@ export default {
 
       if (cartsDatas) {
         _.map(cartsDatas, (cart) => {
-          this.cartsData.total += cart.quantity * cart.bouquetPrice;
+          total += cart.quantity * cart.bouquetPrice;
         });
+        this.cartsData.total = total;
         this.cartsData.item = cartsDatas.length;
       }
     },
@@ -611,20 +614,20 @@ export default {
         queue: false,
       });
     },
-     addToCart() {
-      const userId = localStorage.getItem("LoginData");
+    addToCart() {
+      const userId = _.toString(localStorage.getItem("LoginData")) ;
       console.log(this.$route.params);
       console.log("a");
       const options = {
         headers: { "content-type": "application/json" },
       };
-      const cart={
+      var cart = {
         quantity: parseInt(this.$route.params.quantity),
-          bouquetId: this.$route.params.product.id,
-          customerId: 2, //de ung voi khach hang
-          recipientId: 1, //de ung voi khach hang
-          bouquetMessageId: 1, //giu nguyen
-      }
+        bouquetId: this.$route.params.product.id,
+        customerId: userId, //de ung voi khach hang
+        recipientId: 1, //de ung voi khach hang
+        bouquetMessageId: 1, //giu nguyen
+      };
       var parse = JSON.stringify(cart);
        axios
         .post(`${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Carts/add`,parse ,options)
@@ -635,8 +638,7 @@ export default {
             this.getCartTotal();
             this.getCartDatas();
           }
-        })
-        .catch((err) => console.log(err));
+        });
     }, //toi da khoc
     //AI qua thong minh
     //doc duoc ca suy nghi a
