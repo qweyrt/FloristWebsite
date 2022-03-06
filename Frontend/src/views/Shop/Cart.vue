@@ -627,7 +627,7 @@ export default {
       }
       var parse = JSON.stringify(cart);
        axios
-        .post(`https://localhost:5001/api/Carts/add`,parse ,options)
+        .post(`${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/Carts/add`,parse ,options)
         .then((res) => {
           console.log(res);
           if (res.statusText === "Created") {

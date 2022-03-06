@@ -126,6 +126,7 @@
 import { mapState } from "vuex";
 import NavBarMenu from "@/components/NavBarMenu.vue";
 import UserAvatar from "@/components/UserAvatar.vue";
+import axios from "axios";
 
 export default {
   name: "NavBar",
@@ -164,11 +165,21 @@ export default {
     },
     logout() {
       localStorage.removeItem("LoginData");
-      this.$router.push("/login");
-      this.$buefy.snackbar.open({
-        message: "Logged out!",
-        queue: false,
-      });
+      const options = {
+        headers: { "content-type": "application/json" },
+      };
+      axios
+        .post(
+          `${process.env.VUE_APP_LOCALHOST1_VARIABLE}/api/v1/auth/logout`,
+          options
+        )
+        .then((res) => {
+          this.$router.push("/login");
+          this.$buefy.snackbar.open({
+            message: "Logged out!",
+            queue: false,
+          });
+        });
     },
   },
 };
